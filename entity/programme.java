@@ -4,11 +4,13 @@
  */
 package entity;
 
+import adt.LinkedList;
+
 /**
  *
  * @author chook zhen yew
  */
-public class programme {
+public class Programme {
     private String programmeName;   
     private String programmeCode;
     private String programmeType;           // eg diploma / degree / master
@@ -16,9 +18,9 @@ public class programme {
     private int programmeDuration;          // in terms of year
     private double programmeFee;            // 2 decimal place
     
-    private instructor[] instructors;          // list of instructors involved
-    private course[] courses;                  // list of courses involved
-    private tutorialGroup[] tutorialGroups;    // list of tutorial groups involved
+    private LinkedList<Instructor> instructors;          // list of instructors involved (gonna change data type)
+    private LinkedList<Course> courses;                  // list of courses involved
+    private LinkedList<TutorialGroup> tutorialGroups;    // list of tutorial groups involved (gonna change data type)
 
     
     public String getProgrammeName() {
@@ -69,29 +71,17 @@ public class programme {
         this.programmeFee = programmeFee;
     }
 
-    public instructor[] getInstructors() {
-        return instructors;
-    }
-
-    public void setInstructors(instructor[] instructors) {
-        this.instructors = instructors;
-    }
-
-    public course[] getCourses() {
+    public LinkedList<Course> getCourses() {
         return courses;
     }
 
-    public void setCourses(course[] courses) {
+    public void setCourses(LinkedList<Course> courses) {
         this.courses = courses;
     }
 
-    public tutorialGroup[] getTutorialGroups() {
-        return tutorialGroups;
-    }
 
-    public void setTutorialGroups(tutorialGroup[] tutorialGroups) {
-        this.tutorialGroups = tutorialGroups;
-    }
+
+
     
     
     
