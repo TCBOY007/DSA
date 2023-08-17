@@ -172,8 +172,7 @@ public class programmeUI {
                 System.out.println("[1] Name");
                 System.out.println("[2] Code");
                 System.out.println("[3] Type");
-                System.out.println("[4] Duration");
-                System.out.println("[5] Exit");
+                System.out.println("[4] Exit");
                 System.out.println("-------------------------------------");
                 System.out.print("Choice: ");
                 choice = scanner.nextInt();
@@ -182,7 +181,7 @@ public class programmeUI {
                 // after scan int, it will ignore the first coming scan line
                 scanner.nextLine();
 
-                if (choice < 1 || choice > 5) {
+                if (choice < 1 || choice > 4) {
                     System.out.println("Invalid Option! Please try again");
                     betterUI.pauseFor2Second();
                     betterUI.systemCls();
@@ -191,21 +190,25 @@ public class programmeUI {
                 System.out.println("\n");
                 switch (choice) {
                     case 1:
-                        
+                        System.out.print("Search by Name: ");
+                        String nameInput = scanner.nextLine();
+                        progManage.searchProgramme(nameInput.toUpperCase(), "name");
                         break;
                     case 2:
-                        System.out.print("Search by code: ");
-                        String key = scanner.nextLine();
-                        progManage.searchProgramme(key.toUpperCase());
+                        System.out.print("Search by Code: ");
+                        String codeInput = scanner.nextLine();
+                        progManage.searchProgramme(codeInput.toUpperCase(), "code");
                         break;
                     case 3:
-                        
+                        System.out.print("Search by Type: ");
+                        String typeInput = scanner.nextLine();
+                        progManage.searchProgramme(typeInput.toUpperCase(), "code");
                         break;
 
                 }
 
-            } while (choice < 1 || choice > 5);
-        } while (choice != 5);
+            } while (choice < 1 || choice > 4);
+        } while (choice != 4);
     }
     
     public static void listProgramme(){
