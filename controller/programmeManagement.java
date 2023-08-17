@@ -29,39 +29,53 @@ public class programmeManagement {
         programmeList.add(prog);
         
         if(programmeList.contains(prog))
-            return true;
+                return true;
         else
             return false;
     }
     
-    public void searchProgramme(String key, String condition){
+    public ListInterface<Programme> searchProgramme(String key, String condition) {
         
-        switch(condition){
+        switch (condition) {
             case "name":
-                
-                break;
-            case "code":
-                Predicate<Programme> searchBy = search -> search.getProgrammeCode().equals(key);
-                int chkExist = 0;
+                Predicate<Programme> searchByName = search -> search.getProgrammeName().toUpperCase().contains(key);
+                ListInterface<Programme> listByName = new LinkedList<>();
 
                 for (int i = 1; i <= programmeList.getNumberOfEntries(); i++) {
-                    if (searchBy.test(programmeList.getEntry(i))) {
-                        chkExist++;
-                        System.out.println("Found matching programme: " + programmeList.getEntry(i));
+                    if (searchByName.test(programmeList.getEntry(i))) {
+                        listByName.add(programmeList.getEntry(i));
                     }
                 }
 
-                if (chkExist == 0) {
-                    System.out.println("No Programme Found !");
+                return listByName;
+            case "code":
+                Predicate<Programme> searchByCode = search -> search.getProgrammeCode().equals(key);
+                ListInterface<Programme> listByCode = new LinkedList<>();
+
+                for (int i = 1; i <= programmeList.getNumberOfEntries(); i++) {
+                    if (searchByCode.test(programmeList.getEntry(i))) {
+                        listByCode.add(programmeList.getEntry(i));
+                    }
                 }
-                break;
+
+                return listByCode;
             case "type":
-                
+                Predicate<Programme> searchByType = search -> search.getProgrammeType().equals(key);
+                ListInterface<Programme> listByType = new LinkedList<>();
+
+                for (int i = 1; i <= programmeList.getNumberOfEntries(); i++) {
+                    if (searchByType.test(programmeList.getEntry(i))) {
+                        listByType.add(programmeList.getEntry(i));
+                    }
+                }
+                return listByType;
+            default:
                 break;
         }
         
-        
+        return null;
     }
+
     
     public void printAll(){
         // idea 1 : parameter = general / detail
