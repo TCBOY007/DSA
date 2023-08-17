@@ -34,20 +34,33 @@ public class programmeManagement {
             return false;
     }
     
-    public void searchProgramme(String key){
-        Predicate<Programme> searchBy = search -> search.getProgrammeCode().equals(key);
-        int chkExist = 0;
+    public void searchProgramme(String key, String condition){
         
-        for (int i=1; i <= programmeList.getNumberOfEntries(); i++) {
-            if (searchBy.test(programmeList.getEntry(i))) {
-                chkExist++;
-                System.out.println("Found matching programme: " + programmeList.getEntry(i));
-            }
+        switch(condition){
+            case "name":
+                
+                break;
+            case "code":
+                Predicate<Programme> searchBy = search -> search.getProgrammeCode().equals(key);
+                int chkExist = 0;
+
+                for (int i = 1; i <= programmeList.getNumberOfEntries(); i++) {
+                    if (searchBy.test(programmeList.getEntry(i))) {
+                        chkExist++;
+                        System.out.println("Found matching programme: " + programmeList.getEntry(i));
+                    }
+                }
+
+                if (chkExist == 0) {
+                    System.out.println("No Programme Found !");
+                }
+                break;
+            case "type":
+                
+                break;
         }
         
-        if(chkExist == 0){
-            System.out.println("No Programme Found !");
-        }
+        
     }
     
     public void printAll(){
