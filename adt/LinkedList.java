@@ -73,26 +73,25 @@ public class LinkedList<T> implements ListInterface<T> {
     }
 
     @Override
-    public T remove(int givenPosition) {
-        T result = null;                 // return value
-
+    public boolean remove(int givenPosition) {
+        int tempNumberEntries = numberOfEntries;
         if ((givenPosition >= 1) && (givenPosition <= numberOfEntries)) {
             if (givenPosition == 1) {      // case 1: remove first entry
-                result = firstNode.data;     // save entry to be removed
                 firstNode = firstNode.next;
             } else {                         // case 2: givenPosition > 1
                 Node nodeBefore = firstNode;
-                for (int i = 1; i < givenPosition - 1; ++i) {
+                for (int i = 1; i < givenPosition -1; ++i) {
                     nodeBefore = nodeBefore.next;		// advance nodeBefore to its next node
                 }
-                result = nodeBefore.next.data;  // save entry to be removed
+                
                 nodeBefore.next = nodeBefore.next.next;	// make node before point to node after the
             } 																// one to be deleted (to disconnect node from chain)
 
             numberOfEntries--;
+            
         }
 
-        return result; // return removed entry, or null if operation fails
+        return (tempNumberEntries - 1) == numberOfEntries; // return removed entry, or null if operation fails
     }
 
     @Override
