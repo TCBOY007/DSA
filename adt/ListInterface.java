@@ -46,7 +46,7 @@ public interface ListInterface<T> {
      * empty, givenPosition < 1, or
      *          givenPosition > getNumberOfEntries()
      */
-    public T remove(int givenPosition);
+    public boolean remove(int givenPosition);
 
     /**
      * Task: Removes all entries from the list.
