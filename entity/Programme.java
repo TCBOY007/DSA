@@ -17,19 +17,21 @@ public class Programme {
     private int programmeDuration;          // in terms of year
     private double programmeFee;            // 2 decimal place
     
-    private LinkedList<Instructor> instructors;          // list of instructors involved (gonna change data type)
     private LinkedList<Course> courses;                  // list of courses involved
     private LinkedList<TutorialGroup> tutorialGroups;    // list of tutorial groups involved (gonna change data type)
 
     public Programme() {
     }
 
-    public Programme(String programmeName, String programmeCode, String programmeType ,double programmeFee) {
+    public Programme(String programmeName, String programmeCode, String programmeType, int programmeDuration, double programmeFee) {
         this.programmeName = programmeName;
         this.programmeCode = programmeCode;
         this.programmeType = programmeType;
+        this.programmeDuration = programmeDuration;
         this.programmeFee = programmeFee;
     }
+
+    
 
     
     
@@ -84,7 +86,7 @@ public class Programme {
 
     @Override
     public String toString() {
-        return "Programme{" + "programmeName=" + programmeName + ", programmeCode=" + programmeCode + ", programmeType=" + programmeType + ", programmeDuration=" + programmeDuration + ", programmeFee=" + programmeFee + ", instructors=" + instructors + ", courses=" + courses + ", tutorialGroups=" + tutorialGroups + '}';
+        return "Programme{" + "programmeName=" + programmeName + ", programmeCode=" + programmeCode + ", programmeType=" + programmeType + ", programmeDuration=" + programmeDuration + ", programmeFee=" + programmeFee + ", courses=" + courses + ", tutorialGroups=" + tutorialGroups + '}';
     }
 
 
