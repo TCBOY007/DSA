@@ -20,9 +20,11 @@ public class programmeManagement {
     }
     
     public void initializeData(){
-        programmeList.add(new Programme("Diploma in Computer Science","DCS","DIPLOMA",3847.99));
-        programmeList.add(new Programme("Bachelor in Data Science", "RDS","DEGREE", 35645.55));
-        programmeList.add(new Programme("DIploma in Business", "DAB","DIPLOMA", 3945.56));
+        programmeList.add(new Programme("Diploma in Computer Science","DCS","DIPLOMA",2,3847.99));
+        programmeList.add(new Programme("Diploma in Information", "DIT", "DIPLOMA", 2, 3847.99));
+        programmeList.add(new Programme("Diploma in Biology", "DIB", "DIPLOMA", 2, 3847.99));
+        programmeList.add(new Programme("Bachelor in Data Science", "RDS","DEGREE", 3,35645.55));
+        programmeList.add(new Programme("Master in Business", "MIB","MASTER",2, 49945.56));
     }
 
     public boolean addProgamme(Programme prog){
@@ -40,7 +42,7 @@ public class programmeManagement {
             case "name":
                 Predicate<Programme> searchByName = search -> search.getProgrammeName().toUpperCase().contains(key);
                 ListInterface<Programme> listByName = new LinkedList<>();
-
+                
                 for (int i = 1; i <= programmeList.getNumberOfEntries(); i++) {
                     if (searchByName.test(programmeList.getEntry(i))) {
                         listByName.add(programmeList.getEntry(i));
@@ -70,21 +72,64 @@ public class programmeManagement {
                 }
                 return listByType;
             default:
-                break;
-        }
-        
-        return null;
-    }
+                ListInterface<Programme> defaultList = new LinkedList<>();
 
-    
-    public void printAll(){
-        // idea 1 : parameter = general / detail
-        // detail = print all , general = print general point
-        
-        for(int i=1; i <= programmeList.getNumberOfEntries(); i++){
-            System.out.println(programmeList.getEntry(i));
+                for (int i = 1; i <= programmeList.getNumberOfEntries(); i++) {
+                        defaultList.add(programmeList.getEntry(i));
+                    }
+                
+                return defaultList;
+                }
+                 
         }
         
+    
+
+    public void printAll(){
+        System.out.printf("%70s\n","================");
+        System.out.printf("%70s\n","|Programme List|");
+        System.out.printf("%70s\n","================");
+        System.out.printf("%-5s %-35s %-20s %-20s %-28s %-20s\n", "","Programme Name", "Programme Code", "Programme Type", "Programme Duration(Years)", "Programme Fee");
+        System.out.printf("%-5s %-35s %-20s %-20s %-28s %-20s\n", "","-------------------------", "------------------", "------------------", "------------------", "------------------");
+        for (int i = 1; i <= programmeList.getNumberOfEntries(); i++) {
+            Programme tempProg = programmeList.getEntry(i);
+            System.out.printf("[%d] %-1s %-35s %-20s %-20s %-28d %-20.2f\n", i, "", tempProg.getProgrammeName(), tempProg.getProgrammeCode(), tempProg.getProgrammeType(), tempProg.getProgrammeDuration(), tempProg.getProgrammeFee());
+        }
+        System.out.printf("%-5s %-35s %-20s %-20s %-28s %-20s\n", "", "-------------------------", "------------------", "------------------", "------------------", "------------------");
+
+    }
+    
+    public void printByParameter(ListInterface<Programme> printList){
+        System.out.printf("%70s\n", "================");
+        System.out.printf("%70s\n", "|Programme List|");
+        System.out.printf("%70s\n", "================");
+        System.out.printf("%-5s %-35s %-20s %-20s %-28s %-20s\n", "","Programme Name", "Programme Code", "Programme Type", "Programme Duration(Years)", "Programme Fee");
+        System.out.printf("%-5s %-35s %-20s %-20s %-28s %-20s\n", "","-------------------------", "------------------", "------------------", "------------------", "------------------");
+        for (int i = 1; i <= printList.getNumberOfEntries(); i++) {
+            Programme tempProg = printList.getEntry(i);
+            System.out.printf("[%d] %-1s %-35s %-20s %-20s %-28d %-20.2f\n", i,"",tempProg.getProgrammeName(), tempProg.getProgrammeCode(), tempProg.getProgrammeType(), tempProg.getProgrammeDuration(), tempProg.getProgrammeFee());
+        }
+        System.out.printf("%-5s %-35s %-20s %-20s %-28s %-20s\n", "", "-------------------------", "------------------", "------------------", "------------------", "------------------");
+
+    }
+    
+    public boolean replaceProgramme(Programme newProgramme, int index){
+        boolean successReplace = false;
+        successReplace = programmeList.replace(index, newProgramme);
+        
+        return successReplace;
+    }
+    
+    public boolean removeProgramme(int positionToRemove){
+        boolean sucessfulRemove = false;
+        Programme tempProg = programmeList.getEntry(positionToRemove);
+        programmeList.remove(positionToRemove);
+        
+        if(!programmeList.contains(tempProg)){
+            sucessfulRemove = true;
+        }
+        
+        return sucessfulRemove;
     }
     
 }
