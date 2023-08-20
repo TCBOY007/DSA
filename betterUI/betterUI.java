@@ -26,8 +26,8 @@ public class betterUI {
         }
     }
     
-    public static void loadingScreen(){
-        System.out.print("Loading ");
+    public static void modifyingScreen(){
+        System.out.print("Modifying ");
 
         for (int i = 0; i < 10; i++) {
             System.out.print(".");
@@ -38,6 +38,6 @@ public class betterUI {
             }
         }
 
-        System.out.println("\nLoading complete!");
+        System.out.println("\nModifying complete!");
     }
 }
