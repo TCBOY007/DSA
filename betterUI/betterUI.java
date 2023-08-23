@@ -11,12 +11,13 @@ package betterUI;
 public class betterUI {
     
     public static void pauseFor2Second(){
-        try {
-            // Sleep for 2 seconds (2000 milliseconds)
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            // Handle the exception if sleep is interrupted
-            e.printStackTrace();
+        for (int i = 0; i < 5; i++) {
+            System.out.print(".");
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
     }
     
@@ -26,8 +27,8 @@ public class betterUI {
         }
     }
     
-    public static void modifyingScreen(){
-        System.out.print("Modifying ");
+    public static void loadingScreen(String action){
+        System.out.print(action);
 
         for (int i = 0; i < 10; i++) {
             System.out.print(".");
@@ -38,6 +39,6 @@ public class betterUI {
             }
         }
 
-        System.out.println("\nModifying complete!");
+        System.out.println("\n" + action + " Complete!");
     }
 }
