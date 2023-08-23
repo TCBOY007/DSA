@@ -5,7 +5,6 @@
 package controller;
 
 import adt.*;
-import asg.*;
 import asg.Logo;
 import entity.*;
 import java.time.LocalDateTime;
@@ -26,110 +25,38 @@ public class CourseController {
 
     }
 
-    public void courseMenu() {
+    public void addToLast() {
 
-        int chkIgnoreString = 0;
-        int selection = 0;
+     
 
-        do {
-            DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+        System.out.println("Enter new course code:");
+        String courseCode = scanner.nextLine();
 
-            LocalDateTime myDateObj = LocalDateTime.now();
-            String formattedDate = myDateObj.format(myFormatObj);
-            System.out.println(formattedDate);
+        System.out.println("Enter new course name:");
+        String courseName = scanner.nextLine();
 
-            System.out.println("=================================================");
-            System.out.println("|\t WELCOME TO Course Management System \t|");
-            System.out.println("=================================================");
-            System.out.println("| Please Enter Your Selection \t\t\t | ");
-            System.out.println("| 1. Add Course \t\t\t\t |");
-            System.out.println("| 2. Remove Course  \t\t\t\t |");
-            System.out.println("| 3. Display Course \t\t\t\t |");
-            System.out.println("| 0. Back\t\t\t\t\t |");
-            System.out.println("=================================================");
+        System.out.println("Enter new course Description:");
+        String courseDescription = scanner.nextLine();
 
-            do {
+        System.out.println("Enter new credit hour:");
+        int creditHour = scanner.nextInt();
+        
 
-                boolean flag = false;
+        Course course = new Course();
+        course.setCourseCode(courseCode);
+        course.setCourseName(courseName);
+        course.setCourseDescription(courseDescription);
+        course.setCourseCreditHour(creditHour);
 
-                do {
-                    try {
-                        Scanner sc = new Scanner(System.in);
-                        System.out.println("Enter your selection : ");
-                        selection = sc.nextInt();
-                        
-                        
-                        
-                        while(chkIgnoreString > 0){
-                            scanner.nextLine();
-                            break;
-                        }
-            
-                        
-                        
-                        
-                    } catch (Exception e) {
-                        // accept integer only.
-                        System.out.println("\n\nWrong input ! Please only type Integer ! \n\n");
-                        flag = true;
-                    }
-
-                } while (flag == true);
-                
-                chkIgnoreString++;
-                Logo logo = new Logo();
-
-                switch (selection) {
-
-                    case 1:
-
-                        if (addMenu()) {
-                            System.out.println("Course added successfully");
-                        } else {
-                            System.out.println("Failed to add course, Please try again");
-                        }
-
-                        break;
-                    case 2:
-
-                        if (removeMenu()) {
-                            System.out.println("Course removed successfully");
-                        } else {
-                            System.out.println("Failed to remove course, Please try again");
-                        }
-                        break;
-
-                    case 3:
-
-                        SystemCls();
-                        display();
-                        break;
-
-                    case 4:
-
-                    case 5:
-
-                    case 0:
-                        asg asg = new asg();
-                        asg.mainMenu();
-                        break;
-
-                    default:
-
-                        System.out.println("Wrong Input , Please only type 1-5");
-                        break;
-                }
-
-            } while (selection < 0 || selection > 5);
-
-        } while (selection != 0);
+        if (courseList.add(course)) {
+            loadScreen("add");
+        } else {
+            System.out.println("failed to add");
+        }
 
     }
 
-    public boolean addMenu() {
-        
-
-        boolean added = false;
+    public void addByPosition() {
 
         System.out.println("Enter new course code:");
         String courseCode = scanner.nextLine();
@@ -149,65 +76,81 @@ public class CourseController {
         course.setCourseDescription(courseDescription);
         course.setCourseCreditHour(creditHour);
 
-        //here add different type of add
-        added = courseList.add(course);
+        System.out.println("Specify the position You would like to add");
+        int position = scanner.nextInt();
 
-        return added;
+        if (courseList.add(position, course)) {
+            System.out.println("added successfully");
+        } else {
+            System.out.println("failed to add");
+        }
+    }
+
+    public void removeByName() {
 
     }
 
-    public boolean removeMenu() {
+    public void removeById() {
 
-        SystemCls();
+    }
 
-        boolean removed = false;
+    public void removeByPosition() {
 
-        System.out.println("How would you like to remove the course?");
-        System.out.println("===========");
-        System.out.println("By Name");
-        System.out.println("By Id");
-        System.out.println("By number (1-" + courseList.getNumberOfEntries() + ")");
-        System.out.println("===========");
+        int chkIgnoreString = 0;
 
-        //here add different type of delete, now is using the index number
         System.out.println("Please enter position that u would like to remove:");
         int position = scanner.nextInt();
 
-        if (position != 0 && position <= courseList.getNumberOfEntries()) {
-            courseList.remove(position);
-            removed = true;
+        while (chkIgnoreString > 0) {
+            scanner.nextLine();
+            break;
         }
 
-        return removed;
+        chkIgnoreString++;
+
+        if (courseList.remove(position)) {
+            System.out.println("removed successfully");
+        } else {
+            System.out.println("failed to removed");
+        }
+
     }
 
-    public void display() {
+    public void displayAll() {
 
+        int i = 1;
         Iterator<Course> iterator = courseList.getIterator();
 
-        while (iterator.hasNext()) {
-            Course course = iterator.next();
-            System.out.println("removed");
-            System.out.println("Course code:" + course.getCourseCode());
-            System.out.println("Course name :" + course.getCourseName());
-            System.out.println("Course Description :" + course.getCourseDescription());
-            System.out.println("Course Credit Hour :" + course.getCourseCreditHour());
-            System.out.println("\n\n");
-        }
+        System.out.printf("%70s\n", "================");
+        System.out.printf("%70s\n", "|Course List|");
+        System.out.printf("%70s\n", "================");
+        System.out.printf("%-5s %-35s %-20s %-20s %-28s %-20s %-20s\n", "", "Course Code", "Course Name", "Course Description", "Credit Hour", "Course Fee", "Programme");
+        System.out.printf("%-5s %-35s %-20s %-20s %-28s %-20s %-20s\n", "", "-------------------------", "------------------", "------------------", "------------------", "------------------", "------------------");
 
-        //press Enter key to continue
-        try {
-            System.out.println("Press Enter key to continue");
-            System.in.read();
-        } catch (Exception e) {
+        while (iterator.hasNext()) {
+
+            Course course = iterator.next();
+            System.out.printf("%d %-1s %-35s %-20s %-20s %-28d %-20d \n", i, "", course.getCourseCode(), course.getCourseName(), course.getCourseDescription(), course.getCourseCreditHour(), course.getCourseFee());
+            i++;
+            
         }
+        System.out.printf("%-5s %-35s %-20s %-20s %-28s %-20s %-20s\n", "", "-------------------------", "------------------", "------------------", "------------------", "------------------", "------------------");
 
     }
+    
+      public static void loadScreen(String action){
+        System.out.print(action+"ing");
 
-    static void SystemCls() {
-        for (int i = 0; i < 25; i++) {
-            System.out.println();
+        for (int i = 0; i < 10; i++) {
+            System.out.print(".");
+            try {
+                Thread.sleep(500); // Pause for half a second
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
+
+        System.out.println(action+" complete!");
     }
 
 }
