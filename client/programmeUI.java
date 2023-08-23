@@ -42,6 +42,8 @@ public class programmeUI {
 
                     if (scanner.hasNextInt()) {
                         choice = scanner.nextInt();
+                        
+                        scanner.nextLine();
 
                         if (choice >= 1 && choice <= 4) {
                             chkInput = false;
@@ -58,13 +60,15 @@ public class programmeUI {
                             }
 
                         } else {
-                            System.out.println("Invalid Option! Please try again");
+                            System.out.print("Invalid Option! Please try again later");
                             betterUI.pauseFor2Second();
                             betterUI.systemCls();
                         }
                     }else{
                         scanner.nextLine();
-                        System.out.println("Invalid input! Please enter a valid numerical value.\n");
+                        System.out.print("Invalid input! Please enter a valid numerical value later");
+                        betterUI.pauseFor2Second();
+                        betterUI.systemCls();
                     }
                     
                 }while(chkInput);
@@ -132,14 +136,16 @@ public class programmeUI {
                             }
 
                         } else {
-                            System.out.println("Invalid Option! Please try again");
+                            System.out.print("Invalid Option! Please try again later");
                             betterUI.pauseFor2Second();
                             betterUI.systemCls();
                         }
 
                     }else{
                         scanner.nextLine();
-                        System.out.println("Invalid input! Please enter a valid numerical value.\n");
+                        System.out.print("Invalid input! Please enter a valid numerical value later");
+                        betterUI.pauseFor2Second();
+                        betterUI.systemCls();
                     }
                 }while(chkInput);
                 
@@ -189,12 +195,11 @@ public class programmeUI {
                 }
                 else{
                     System.out.println("Invalid Option! Please try again\n");
-                    betterUI.pauseFor2Second();
                 }
                 
             } else {
                 scanner.nextLine();
-                System.out.println("Invalid input! Please enter a valid numerical value.\n");
+                System.out.println("Invalid input! Please enter a valid numerical value\n");
             }
             
         } while (chk);
@@ -211,12 +216,12 @@ public class programmeUI {
                     chk2 = false;
                     break;
                 } else {
-                    System.out.println("Invalid input! Please enter a valid numerical value.");
+                    System.out.println("Invalid input! Please enter a valid numerical value");
 
                 }
 
             } else {
-                System.out.println("Invalid input! Please enter a valid numerical value.");
+                System.out.println("Invalid input! Please enter a valid numerical value");
             }
 
         } while (chk2);
@@ -234,12 +239,12 @@ public class programmeUI {
                     break;
                 }
                 else {
-                    System.out.println("Invalid input! Please enter a valid numerical value.");
+                    System.out.println("Invalid input! Please enter a valid numerical value");
 
                 }
 
             } else {
-                System.out.println("Invalid input! Please enter a valid numerical value.");
+                System.out.println("Invalid input! Please enter a valid numerical value");
             }
 
         } while (chk3);
@@ -247,8 +252,7 @@ public class programmeUI {
         
         
         if(progManage.addProgamme(newProg)){
-            System.out.println("New Programmed Added Successfully !");
-            betterUI.pauseFor2Second();
+            betterUI.loadingScreen("Adding");
         }
         else{
             System.out.println("No Programme Added !");
@@ -290,24 +294,28 @@ public class programmeUI {
                                 case 1:
                                     System.out.print("Search by Name: ");
                                     String nameInput = scanner.nextLine();
+                                    
                                     ListInterface<Programme> listByName = progManage.searchProgramme(nameInput.toUpperCase(), "name");
-
-                                    progManage.printByParameter(listByName);
-
-                                    if (listByName.isEmpty()) {
-                                        System.out.println("No Programme !");
+                                    betterUI.loadingScreen("Searching");
+                                    System.out.println("\n");
+                                    if (!listByName.isEmpty()) {
+                                        progManage.printByParameter(listByName);
+                                    }else{
+                                        System.out.println("No such Programme !");
                                     }
+                                    
 
                                     break;
                                 case 2:
                                     System.out.print("Search by Code: ");
                                     String codeInput = scanner.nextLine();
                                     ListInterface<Programme> listByCode = progManage.searchProgramme(codeInput.toUpperCase(), "code");
-
-                                    progManage.printByParameter(listByCode);
-
-                                    if (listByCode.isEmpty()) {
-                                        System.out.println("No Programme !");
+                                    betterUI.loadingScreen("Searching");
+                                    System.out.println("\n");
+                                    if (!listByCode.isEmpty()) {
+                                        progManage.printByParameter(listByCode);
+                                    } else {
+                                        System.out.println("No such Programme !");
                                     }
                                     break;
                                 case 3:
@@ -338,36 +346,36 @@ public class programmeUI {
 
                                             } else {
                                                 System.out.println("Invalid Option! Please try again\n");
-                                                betterUI.pauseFor2Second();
                                             }
 
                                         } else {
                                             scanner.nextLine();
-                                            System.out.println("Invalid input! Please enter a valid numerical value.\n");
+                                            System.out.println("Invalid input! Please enter a valid numerical value\n");
                                         }
 
                                     } while (chk);
 
                                     ListInterface<Programme> listByType = progManage.searchProgramme(typeInput, "type");
-
-                                    progManage.printByParameter(listByType);
-
-                                    if (listByType.isEmpty()) {
-                                        System.out.println("No Programme !");
+                                    betterUI.loadingScreen("Searching");
+                                    System.out.println("\n");
+                                    if (!listByType.isEmpty()) {
+                                        progManage.printByParameter(listByType);
+                                    } else {
+                                        System.out.println("No such Programme !");
                                     }
                                     break;
 
                             }
 
                         } else {
-                            System.out.println("Invalid Option! Please try again");
+                            System.out.print("Invalid Option! Please try again later");
                             betterUI.pauseFor2Second();
-                            betterUI.systemCls();
                         }
 
                     } else {
                         scanner.nextLine();
-                        System.out.println("Invalid input! Please enter a valid numerical value.\n");
+                        System.out.print("Invalid input! Please enter a valid numerical value later");
+                        betterUI.pauseFor2Second();
                     }
                     
                     
@@ -398,11 +406,11 @@ public class programmeUI {
                         // after scan int, it will ignore the first coming scan line
                         scanner.nextLine();
                         
-                        if (index >= 1 && index <= progManage.searchProgramme("", "").getNumberOfEntries()) {
+                        if (index >= 1 && index <= progManage.searchProgramme("", "").getTotalNumberData()) {
                             
                             do{
                                 chkInput2 = true;
-                                Programme tempProg = progManage.searchProgramme("", "").getEntry(index);
+                                Programme tempProg = progManage.searchProgramme("", "").getData(index);
                                 
                                 
                                 do{
@@ -436,19 +444,23 @@ public class programmeUI {
                                                     case 1:
                                                         System.out.print("Enter new name: ");
                                                         String newName = scanner.nextLine();
-                                                        Programme newNameProg = progManage.searchProgramme("", "").getEntry(index);
+                                                        Programme newNameProg = progManage.searchProgramme("", "").getData(index);
                                                         newNameProg.setProgrammeName(newName);
                                                         if (progManage.replaceProgramme(newNameProg, index)) {
-                                                            betterUI.modifyingScreen();
+                                                            betterUI.loadingScreen("Modifying");
+                                                        }else{
+                                                            System.out.println("Modify Failed!");
                                                         }
                                                         break;
                                                     case 2:
                                                         System.out.print("Enter new code: ");
                                                         String newCode = scanner.nextLine();
-                                                        Programme newCodeProg = progManage.searchProgramme("", "").getEntry(index);
+                                                        Programme newCodeProg = progManage.searchProgramme("", "").getData(index);
                                                         newCodeProg.setProgrammeCode(newCode);
                                                         if (progManage.replaceProgramme(newCodeProg, index)) {
-                                                            betterUI.modifyingScreen();
+                                                            betterUI.loadingScreen("Modifying");
+                                                        }else {
+                                                            System.out.println("Modify Failed!");
                                                         }
                                                         break;
                                                     case 3:
@@ -480,19 +492,20 @@ public class programmeUI {
 
                                                                 } else {
                                                                     System.out.println("Invalid Option! Please try again\n");
-                                                                    betterUI.pauseFor2Second();
                                                                 }
 
                                                             } else {
                                                                 scanner.nextLine();
-                                                                System.out.println("Invalid input! Please enter a valid numerical value.\n");
+                                                                System.out.println("Invalid input! Please enter a valid numerical value\n");
                                                             }
 
                                                         } while (chk);
-                                                        Programme newTypeProg = progManage.searchProgramme("", "").getEntry(index);
+                                                        Programme newTypeProg = progManage.searchProgramme("", "").getData(index);
                                                         newTypeProg.setProgrammeType(typeInput);
                                                         if (progManage.replaceProgramme(newTypeProg, index)) {
-                                                            betterUI.modifyingScreen();
+                                                            betterUI.loadingScreen("Modifying");
+                                                        }else {
+                                                            System.out.println("Modify Failed!");
                                                         }
                                                         break;
                                                     case 4:
@@ -503,21 +516,23 @@ public class programmeUI {
                                                             if (scanner.hasNextInt()) {
                                                                 duration = scanner.nextInt();
                                                                 if (duration > 0) {
-                                                                    Programme newDurationProg = progManage.searchProgramme("", "").getEntry(index);
+                                                                    Programme newDurationProg = progManage.searchProgramme("", "").getData(index);
                                                                     newDurationProg.setProgrammeDuration(duration);
                                                                     if (progManage.replaceProgramme(newDurationProg, index)) {
-                                                                        betterUI.modifyingScreen();
+                                                                        betterUI.loadingScreen("Modifying");
+                                                                    }else {
+                                                                        System.out.println("Modify Failed!");
                                                                     }                                                                    
                                                                     chk2 = false;
                                                                     break;
                                                                 } else {
-                                                                    System.out.println("Invalid input! Please enter a valid numerical value.");
+                                                                    System.out.println("Invalid input! Please enter a valid numerical value");
 
                                                                 }
 
                                                             } else {
                                                                 scanner.nextLine();
-                                                                System.out.println("Invalid input! Please enter a valid numerical value.");
+                                                                System.out.println("Invalid input! Please enter a valid numerical value");
                                                             }
 
                                                         } while (chk2);
@@ -530,21 +545,23 @@ public class programmeUI {
                                                             if (scanner.hasNextDouble()) {
                                                                 fee = scanner.nextDouble();
                                                                 if (fee > 0) {
-                                                                    Programme newFeeProg = progManage.searchProgramme("", "").getEntry(index);
+                                                                    Programme newFeeProg = progManage.searchProgramme("", "").getData(index);
                                                                     newFeeProg.setProgrammeFee(fee);
                                                                     if (progManage.replaceProgramme(newFeeProg, index)) {
-                                                                        betterUI.modifyingScreen();
+                                                                        betterUI.loadingScreen("Modifying");
+                                                                    }else {
+                                                                        System.out.println("Modify Failed!");
                                                                     }
                                                                     chk3 = false;
                                                                     break;
                                                                 } else {
-                                                                    System.out.println("Invalid input! Please enter a valid numerical value.");
+                                                                    System.out.println("Invalid input! Please enter a valid numerical value");
 
                                                                 }
 
                                                             } else {
                                                                 scanner.nextLine();
-                                                                System.out.println("Invalid input! Please enter a valid numerical value.");
+                                                                System.out.println("Invalid input! Please enter a valid numerical value");
                                                             }
 
                                                         } while (chk3);
@@ -553,14 +570,14 @@ public class programmeUI {
                                                 }
 
                                             } else {
-                                                System.out.println("Invalid Option! Please try again");
+                                                System.out.print("Invalid Option! Please try again later");
                                                 betterUI.pauseFor2Second();
                                                 betterUI.systemCls();
                                             }
 
                                         } else {
                                             scanner.nextLine();
-                                            System.out.println("Invalid Option! Please try again");
+                                            System.out.print("Invalid Option! Please try again later");
                                             betterUI.pauseFor2Second();
                                             betterUI.systemCls();
                                         }
@@ -575,10 +592,13 @@ public class programmeUI {
                             
                     } else {
                         scanner.nextLine();
-                        System.out.println("Invalid input! Please enter a valid numerical value.\n");
+                        System.out.println("Invalid input! Please enter a valid index\n");
                     }
 
-                }
+                }else {
+                        scanner.nextLine();
+                        System.out.println("Invalid input! Please enter a valid index\n");
+                    }
                     
                 }while (chkInput);
 
@@ -605,11 +625,11 @@ public class programmeUI {
                         // after scan int, it will ignore the first coming scan line
                         scanner.nextLine();
 
-                        if (choice >= 1 && choice <= progManage.searchProgramme("", "").getNumberOfEntries()) {
+                        if (choice >= 1 && choice <= progManage.searchProgramme("", "").getTotalNumberData()) {
                             chkInput = false;
                             System.out.println("\n");
                             
-                            Programme tempProg = progManage.searchProgramme("", "").getEntry(choice);
+                            Programme tempProg = progManage.searchProgramme("", "").getData(choice);
                             System.out.println("Programme to delete: " + tempProg.getProgrammeName());
                             System.out.println("\t[1] Confirm   [0] No");
                             System.out.print("Choice: ");
@@ -620,20 +640,21 @@ public class programmeUI {
                                     if (confirmInput == 1) {
                                         
                                         if(progManage.removeProgramme(choice)){
-                                            betterUI.modifyingScreen();
-                                            System.out.println("Returning back to progrmme menu...");
+                                            betterUI.loadingScreen("Removing");
+                                            System.out.print("Returning back to progrmme menu");
                                             betterUI.pauseFor2Second();
                                         }
                                         
                                     } else {
                                         System.out.println("No Programme is removed");
-                                        System.out.println("Returning back to progrmme menu...");
+                                        System.out.print("Returning back to progrmme menu");
                                         betterUI.pauseFor2Second();
                                     }
                             }
                             else{
+                                scanner.nextLine();
                                 System.out.println("No Programme is removed");
-                                System.out.println("Returning back to progrmme menu...");
+                                System.out.print("Returning back to progrmme menu");
                                 betterUI.pauseFor2Second();
                             }
 
@@ -641,14 +662,14 @@ public class programmeUI {
                             
 
                         } else {
-                            System.out.println("Invalid Option! Please try again");
+                            System.out.print("Invalid Option! Please try again");
                             betterUI.pauseFor2Second();
-                            betterUI.systemCls();
                         }
 
                     } else {
                         scanner.nextLine();
-                        System.out.println("Invalid input! Please enter a valid numerical value.\n");
+                        System.out.print("Invalid input! Please enter a valid numerical value");
+                        betterUI.pauseFor2Second();
                     }
 
                 } while (chkInput);
@@ -662,51 +683,78 @@ public class programmeUI {
     
     public static void coursesSubMenu() {
         int choice = 0;
+        boolean chkInput;
 
         do {
 
             do {
-                System.out.println("\n");
-                System.out.println("              Courses               ");
-                System.out.println("------------------------------------");
-                System.out.println("[1] Add Courses to a Programme");
-                System.out.println("[2] Remove Courses from a Programme");
-                System.out.println("[3] List Courses for a Programme");
-                System.out.println("[4] Exit");
-                System.out.println("-------------------------------------");
-                System.out.print("Choice: ");
-                choice = scanner.nextInt();
                 
-                // Consume the newline character left in the buffer
-                // after scan int, it will ignore the first coming scan line
-                scanner.nextLine();
+                do{
+                    chkInput = true;
+                    
+                    System.out.println("\n");
+                    System.out.println("              Courses               ");
+                    System.out.println("------------------------------------");
+                    System.out.println("[1] Add Courses to a Programme");
+                    System.out.println("[2] Remove Courses from a Programme");
+                    System.out.println("[3] List Courses for a Programme");
+                    System.out.println("[4] Exit");
+                    System.out.println("-------------------------------------");
+                    System.out.print("Choice: ");
 
-                if (choice < 1 || choice > 4) {
-                    System.out.println("Invalid Option! Please try again");
-                    betterUI.pauseFor2Second();
-                    betterUI.systemCls();
-                }
+                    if (scanner.hasNextInt()) {
+                        choice = scanner.nextInt();
 
-                System.out.println("\n");
-                switch (choice) {
-                    case 1:
-                        
-                        break;
-                    case 2:
-                        
-                        break;
-                    case 3:
-                        
-                        break;
+                        // Consume the newline character left in the buffer
+                        // after scan int, it will ignore the first coming scan line
+                        scanner.nextLine();
 
-                }
+                        if (choice >= 1 && choice <= 4) {
+                            chkInput = false;
+                            System.out.println("\n");
+                            switch (choice) {
+                                case 1:
+                                    addCourseToProgramme();
+                                    break;
+                                case 2:
+                                    removeCourseFromProgramme();
+                                    break;
+                                case 3:
+                                    listCourseForProgramme();
+                                    break;
+
+                            }
+
+                        } else {
+                            System.out.print("Invalid Option! Please try again");
+                            betterUI.pauseFor2Second();
+                            betterUI.systemCls();
+                        }
+
+                    }else{
+                        scanner.nextLine();
+                        System.out.println("Invalid input! Please enter a valid numerical value\n");
+                    }
+                }while(chkInput);
+                
 
             } while (choice < 1 || choice > 4);
         } while (choice != 4);
         
+        
     }
     
+    public static void addCourseToProgramme(){
+        
+    }
     
+    public static void removeCourseFromProgramme(){
+        
+    }
+    
+    public static void listCourseForProgramme(){
+        
+    }
     
     
 }
