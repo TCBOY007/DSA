@@ -36,7 +36,8 @@ public class programmeUI {
                     System.out.println("[1] Programmes Details");
                     System.out.println("[2] Tutorial Groups of Programmes");
                     System.out.println("[3] Courses of Programmes Details");
-                    System.out.println("[4] Exit");
+                    System.out.println("[4] History Report");
+                    System.out.println("[5] Exit");
                     System.out.println("-----------------------------------------");
                     System.out.print("Choice: ");
 
@@ -45,7 +46,7 @@ public class programmeUI {
                         
                         scanner.nextLine();
 
-                        if (choice >= 1 && choice <= 4) {
+                        if (choice >= 1 && choice <= 5) {
                             chkInput = false;
 
                             System.out.println("\n");
@@ -54,9 +55,14 @@ public class programmeUI {
                                     programmeSubMenu();
                                     break;
                                 case 2:
+                                    
+                                    break;
+                                case 3:
                                     coursesSubMenu();
                                     break;
-                                    
+                                case 4:
+                                    historyReport();
+                                    break;
                             }
 
                         } else {
@@ -77,8 +83,8 @@ public class programmeUI {
                 
                 
                 
-            }while(choice < 1 || choice > 4);
-        }while(choice != 4);
+            }while(choice < 1 || choice > 5);
+        }while(choice != 5);
         
 
     }
@@ -252,6 +258,7 @@ public class programmeUI {
         
         
         if(progManage.addProgamme(newProg)){
+            progManage.addHistory("Added new programme (" + newProg.getProgrammeName() + ")");
             betterUI.loadingScreen("Adding");
         }
         else{
@@ -297,6 +304,8 @@ public class programmeUI {
                                     
                                     ListInterface<Programme> listByName = progManage.searchProgramme(nameInput.toUpperCase(), "name");
                                     betterUI.loadingScreen("Searching");
+                                    progManage.addHistory("Searched for (" + nameInput +")" + " by progamme name");
+                                    
                                     System.out.println("\n");
                                     if (!listByName.isEmpty()) {
                                         progManage.printByParameter(listByName);
@@ -311,6 +320,8 @@ public class programmeUI {
                                     String codeInput = scanner.nextLine();
                                     ListInterface<Programme> listByCode = progManage.searchProgramme(codeInput.toUpperCase(), "code");
                                     betterUI.loadingScreen("Searching");
+                                    progManage.addHistory("Searched for (" + codeInput + ")" + " by programme code");
+                                    
                                     System.out.println("\n");
                                     if (!listByCode.isEmpty()) {
                                         progManage.printByParameter(listByCode);
@@ -357,6 +368,8 @@ public class programmeUI {
 
                                     ListInterface<Programme> listByType = progManage.searchProgramme(typeInput, "type");
                                     betterUI.loadingScreen("Searching");
+                                    progManage.addHistory("Searched for (" + typeInput + ")" + " by progamme type");
+                                    
                                     System.out.println("\n");
                                     if (!listByType.isEmpty()) {
                                         progManage.printByParameter(listByType);
@@ -445,9 +458,12 @@ public class programmeUI {
                                                         System.out.print("Enter new name: ");
                                                         String newName = scanner.nextLine();
                                                         Programme newNameProg = progManage.searchProgramme("", "").getData(index);
+                                                        String oldName = newNameProg.getProgrammeName();
                                                         newNameProg.setProgrammeName(newName);
                                                         if (progManage.replaceProgramme(newNameProg, index)) {
                                                             betterUI.loadingScreen("Modifying");
+                                                            progManage.addHistory("Modified programme name from (" + oldName + ") to new name (" + newName + ")");
+                                                            
                                                         }else{
                                                             System.out.println("Modify Failed!");
                                                         }
@@ -456,9 +472,12 @@ public class programmeUI {
                                                         System.out.print("Enter new code: ");
                                                         String newCode = scanner.nextLine();
                                                         Programme newCodeProg = progManage.searchProgramme("", "").getData(index);
+                                                        String oldCode = newCodeProg.getProgrammeCode();
                                                         newCodeProg.setProgrammeCode(newCode);
                                                         if (progManage.replaceProgramme(newCodeProg, index)) {
                                                             betterUI.loadingScreen("Modifying");
+                                                            progManage.addHistory("Modified programme code of " + newCodeProg.getProgrammeName() + " from (" + oldCode + ") to new code (" + newCode + ")");
+
                                                         }else {
                                                             System.out.println("Modify Failed!");
                                                         }
@@ -501,9 +520,13 @@ public class programmeUI {
 
                                                         } while (chk);
                                                         Programme newTypeProg = progManage.searchProgramme("", "").getData(index);
+                                                        String oldType = newTypeProg.getProgrammeType();
                                                         newTypeProg.setProgrammeType(typeInput);
                                                         if (progManage.replaceProgramme(newTypeProg, index)) {
                                                             betterUI.loadingScreen("Modifying");
+                                                            progManage.addHistory("Modified programme type of " + newTypeProg.getProgrammeName() + " from (" + oldType + ") to new type (" + typeInput + ")");
+
+                                                            
                                                         }else {
                                                             System.out.println("Modify Failed!");
                                                         }
@@ -517,9 +540,12 @@ public class programmeUI {
                                                                 duration = scanner.nextInt();
                                                                 if (duration > 0) {
                                                                     Programme newDurationProg = progManage.searchProgramme("", "").getData(index);
+                                                                    int oldDuration = newDurationProg.getProgrammeDuration();
                                                                     newDurationProg.setProgrammeDuration(duration);
                                                                     if (progManage.replaceProgramme(newDurationProg, index)) {
                                                                         betterUI.loadingScreen("Modifying");
+                                                                        progManage.addHistory("Modified programme duration of " + newDurationProg.getProgrammeName() + " from " + oldDuration + " years to " + duration + " years");
+
                                                                     }else {
                                                                         System.out.println("Modify Failed!");
                                                                     }                                                                    
@@ -546,9 +572,12 @@ public class programmeUI {
                                                                 fee = scanner.nextDouble();
                                                                 if (fee > 0) {
                                                                     Programme newFeeProg = progManage.searchProgramme("", "").getData(index);
+                                                                    double oldFee = newFeeProg.getProgrammeFee();
                                                                     newFeeProg.setProgrammeFee(fee);
                                                                     if (progManage.replaceProgramme(newFeeProg, index)) {
                                                                         betterUI.loadingScreen("Modifying");
+                                                                        progManage.addHistory("Modified programme fee of " + newFeeProg.getProgrammeName() + " from RM" + oldFee+ " to RM" + fee );
+
                                                                     }else {
                                                                         System.out.println("Modify Failed!");
                                                                     }
@@ -605,6 +634,7 @@ public class programmeUI {
     }
     
     public static void listProgramme(){
+        progManage.addHistory("Listed all progammes");
         progManage.printAll();
     }
     
@@ -640,6 +670,7 @@ public class programmeUI {
                                     if (confirmInput == 1) {
                                         
                                         if(progManage.removeProgramme(choice)){
+                                            progManage.addHistory("Removed programme " + tempProg.getProgrammeName());
                                             betterUI.loadingScreen("Removing");
                                             System.out.print("Returning back to progrmme menu");
                                             betterUI.pauseFor2Second();
@@ -756,5 +787,9 @@ public class programmeUI {
         
     }
     
+    
+    public static void historyReport(){
+        progManage.printHistory();
+    }
     
 }
