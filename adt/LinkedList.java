@@ -17,11 +17,11 @@ public class LinkedList<T> implements ListInterface<T> {
     private int totalNumberData;
 
     public LinkedList() {
-        initialize();
+        reset();
     }
 
     @Override
-    public final void initialize() {
+    public final void reset() {
         firstNode = null;
         totalNumberData = 0;
     }
