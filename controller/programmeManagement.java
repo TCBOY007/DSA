@@ -43,9 +43,9 @@ public class programmeManagement {
                 Predicate<Programme> searchByName = search -> search.getProgrammeName().toUpperCase().contains(key);
                 ListInterface<Programme> listByName = new LinkedList<>();
                 
-                for (int i = 1; i <= programmeList.getNumberOfEntries(); i++) {
-                    if (searchByName.test(programmeList.getEntry(i))) {
-                        listByName.add(programmeList.getEntry(i));
+                for (int i = 1; i <= programmeList.getTotalNumberData(); i++) {
+                    if (searchByName.test(programmeList.getData(i))) {
+                        listByName.add(programmeList.getData(i));
                     }
                 }
 
@@ -54,9 +54,9 @@ public class programmeManagement {
                 Predicate<Programme> searchByCode = search -> search.getProgrammeCode().equals(key);
                 ListInterface<Programme> listByCode = new LinkedList<>();
 
-                for (int i = 1; i <= programmeList.getNumberOfEntries(); i++) {
-                    if (searchByCode.test(programmeList.getEntry(i))) {
-                        listByCode.add(programmeList.getEntry(i));
+                for (int i = 1; i <= programmeList.getTotalNumberData(); i++) {
+                    if (searchByCode.test(programmeList.getData(i))) {
+                        listByCode.add(programmeList.getData(i));
                     }
                 }
 
@@ -65,17 +65,17 @@ public class programmeManagement {
                 Predicate<Programme> searchByType = search -> search.getProgrammeType().equals(key);
                 ListInterface<Programme> listByType = new LinkedList<>();
 
-                for (int i = 1; i <= programmeList.getNumberOfEntries(); i++) {
-                    if (searchByType.test(programmeList.getEntry(i))) {
-                        listByType.add(programmeList.getEntry(i));
+                for (int i = 1; i <= programmeList.getTotalNumberData(); i++) {
+                    if (searchByType.test(programmeList.getData(i))) {
+                        listByType.add(programmeList.getData(i));
                     }
                 }
                 return listByType;
             default:
                 ListInterface<Programme> defaultList = new LinkedList<>();
 
-                for (int i = 1; i <= programmeList.getNumberOfEntries(); i++) {
-                        defaultList.add(programmeList.getEntry(i));
+                for (int i = 1; i <= programmeList.getTotalNumberData(); i++) {
+                        defaultList.add(programmeList.getData(i));
                     }
                 
                 return defaultList;
@@ -91,8 +91,8 @@ public class programmeManagement {
         System.out.printf("%70s\n","================");
         System.out.printf("%-5s %-35s %-20s %-20s %-28s %-20s\n", "","Programme Name", "Programme Code", "Programme Type", "Programme Duration(Years)", "Programme Fee");
         System.out.printf("%-5s %-35s %-20s %-20s %-28s %-20s\n", "","-------------------------", "------------------", "------------------", "------------------", "------------------");
-        for (int i = 1; i <= programmeList.getNumberOfEntries(); i++) {
-            Programme tempProg = programmeList.getEntry(i);
+        for (int i = 1; i <= programmeList.getTotalNumberData(); i++) {
+            Programme tempProg = programmeList.getData(i);
             System.out.printf("[%d] %-1s %-35s %-20s %-20s %-28d %-20.2f\n", i, "", tempProg.getProgrammeName(), tempProg.getProgrammeCode(), tempProg.getProgrammeType(), tempProg.getProgrammeDuration(), tempProg.getProgrammeFee());
         }
         System.out.printf("%-5s %-35s %-20s %-20s %-28s %-20s\n", "", "-------------------------", "------------------", "------------------", "------------------", "------------------");
@@ -105,8 +105,8 @@ public class programmeManagement {
         System.out.printf("%70s\n", "================");
         System.out.printf("%-5s %-35s %-20s %-20s %-28s %-20s\n", "","Programme Name", "Programme Code", "Programme Type", "Programme Duration(Years)", "Programme Fee");
         System.out.printf("%-5s %-35s %-20s %-20s %-28s %-20s\n", "","-------------------------", "------------------", "------------------", "------------------", "------------------");
-        for (int i = 1; i <= printList.getNumberOfEntries(); i++) {
-            Programme tempProg = printList.getEntry(i);
+        for (int i = 1; i <= printList.getTotalNumberData(); i++) {
+            Programme tempProg = printList.getData(i);
             System.out.printf("[%d] %-1s %-35s %-20s %-20s %-28d %-20.2f\n", i,"",tempProg.getProgrammeName(), tempProg.getProgrammeCode(), tempProg.getProgrammeType(), tempProg.getProgrammeDuration(), tempProg.getProgrammeFee());
         }
         System.out.printf("%-5s %-35s %-20s %-20s %-28s %-20s\n", "", "-------------------------", "------------------", "------------------", "------------------", "------------------");
@@ -122,7 +122,7 @@ public class programmeManagement {
     
     public boolean removeProgramme(int positionToRemove){
         boolean sucessfulRemove = false;
-        Programme tempProg = programmeList.getEntry(positionToRemove);
+        Programme tempProg = programmeList.getData(positionToRemove);
         programmeList.remove(positionToRemove);
         
         if(!programmeList.contains(tempProg)){
