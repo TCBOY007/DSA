@@ -19,7 +19,7 @@ public interface ListInterface<T> {
 
     public boolean remove(int position);
 
-    public void initialize();
+    public void reset();
 
     public boolean replace(int position, T newdata);
 
