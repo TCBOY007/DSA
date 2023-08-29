@@ -140,15 +140,18 @@ public class LinkedList<T> implements ListInterface<T> {
     }
 
     @Override
-    public T searchByCriteria(Predicate<T> criteria) {
+    public ListInterface<T> searchByCriteria(Predicate<T> criteria) {
+        ListInterface<T> matchingData = new LinkedList<>();
+
         Node currentNode = firstNode;
         while (currentNode != null) {
             if (criteria.test(currentNode.data)) {
-                return currentNode.data;
+                matchingData.add(currentNode.data);
             }
             currentNode = currentNode.next;
         }
-        return null; // Return null if no matching data is found    
+
+        return matchingData;
     }
 
     
