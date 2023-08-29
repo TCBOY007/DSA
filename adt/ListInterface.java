@@ -27,7 +27,7 @@ public interface ListInterface<T> {
 
     public boolean contains(T data);
     
-    public T searchByCriteria(Predicate<T> criteria);
+    public ListInterface<T> searchByCriteria(Predicate<T> criteria);
     
     public int getTotalNumberData();
 
