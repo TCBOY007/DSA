@@ -17,7 +17,6 @@ public class Programme {
     private int programmeDuration;          // in terms of year
     private double programmeFee;            // 2 decimal place
     
-    private LinkedList<Course> courses;                  // list of courses involved
     private LinkedList<TutorialGroup> tutorialGroups;    // list of tutorial groups involved (gonna change data type)
 
     public Programme() {
@@ -74,19 +73,6 @@ public class Programme {
 
     public void setProgrammeFee(double programmeFee) {
         this.programmeFee = programmeFee;
-    }
-
-    public LinkedList<Course> getCourses() {
-        return courses;
-    }
-
-    public void setCourses(LinkedList<Course> courses) {
-        this.courses = courses;
-    }
-
-    @Override
-    public String toString() {
-        return "Programme{" + "programmeName=" + programmeName + ", programmeCode=" + programmeCode + ", programmeType=" + programmeType + ", programmeDuration=" + programmeDuration + ", programmeFee=" + programmeFee + ", courses=" + courses + ", tutorialGroups=" + tutorialGroups + '}';
     }
 
 
