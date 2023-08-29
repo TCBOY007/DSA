@@ -35,9 +35,8 @@ public class programmeUI {
                     System.out.println("==========================================");
                     System.out.println("[1] Programmes Details");
                     System.out.println("[2] Tutorial Groups of Programmes");
-                    System.out.println("[3] Courses of Programmes Details");
-                    System.out.println("[4] History Report");
-                    System.out.println("[5] Exit");
+                    System.out.println("[3] History Report");
+                    System.out.println("[4] Exit");
                     System.out.println("-----------------------------------------");
                     System.out.print("Choice: ");
 
@@ -46,7 +45,7 @@ public class programmeUI {
                         
                         scanner.nextLine();
 
-                        if (choice >= 1 && choice <= 5) {
+                        if (choice >= 1 && choice <= 4) {
                             chkInput = false;
 
                             System.out.println("\n");
@@ -55,12 +54,9 @@ public class programmeUI {
                                     programmeSubMenu();
                                     break;
                                 case 2:
-                                    
+                                    tutGroupSubMenu();
                                     break;
                                 case 3:
-                                    coursesSubMenu();
-                                    break;
-                                case 4:
                                     historyReport();
                                     break;
                             }
@@ -83,8 +79,8 @@ public class programmeUI {
                 
                 
                 
-            }while(choice < 1 || choice > 5);
-        }while(choice != 5);
+            }while(choice < 1 || choice > 4);
+        }while(choice != 4);
         
 
     }
@@ -169,6 +165,7 @@ public class programmeUI {
         
         System.out.print("Enter programme name :");
         newProg.setProgrammeName(scanner.nextLine());
+        
         System.out.print("Enter programme code :");
         newProg.setProgrammeCode(scanner.nextLine().toUpperCase());
         
@@ -712,7 +709,7 @@ public class programmeUI {
     
     
     
-    public static void coursesSubMenu() {
+    public static void tutGroupSubMenu() {
         int choice = 0;
         boolean chkInput;
 
@@ -724,11 +721,11 @@ public class programmeUI {
                     chkInput = true;
                     
                     System.out.println("\n");
-                    System.out.println("              Courses               ");
+                    System.out.println("          Tutorial Groups           ");
                     System.out.println("------------------------------------");
-                    System.out.println("[1] Add Courses to a Programme");
-                    System.out.println("[2] Remove Courses from a Programme");
-                    System.out.println("[3] List Courses for a Programme");
+                    System.out.println("[1] Add Tutorial Group to a Programme");
+                    System.out.println("[2] Remove Tutorial Group from a Programme");
+                    System.out.println("[3] List Tutorial Group for a Programme");
                     System.out.println("[4] Exit");
                     System.out.println("-------------------------------------");
                     System.out.print("Choice: ");
@@ -745,13 +742,13 @@ public class programmeUI {
                             System.out.println("\n");
                             switch (choice) {
                                 case 1:
-                                    addCourseToProgramme();
+                                    addTutGroupToProgramme();
                                     break;
                                 case 2:
-                                    removeCourseFromProgramme();
+                                    removeTutGroupFromProgramme();
                                     break;
                                 case 3:
-                                    listCourseForProgramme();
+                                    listTutGroupForProgramme();
                                     break;
 
                             }
@@ -775,15 +772,15 @@ public class programmeUI {
         
     }
     
-    public static void addCourseToProgramme(){
+    public static void addTutGroupToProgramme(){
         
     }
     
-    public static void removeCourseFromProgramme(){
+    public static void removeTutGroupFromProgramme(){
         
     }
     
-    public static void listCourseForProgramme(){
+    public static void listTutGroupForProgramme(){
         
     }
     
