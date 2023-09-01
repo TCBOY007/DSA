@@ -4,13 +4,9 @@
  */
 package adt;
 
+import java.util.Iterator;
 import java.util.function.Predicate;
 
-
-/**
- *
- * @author chook zhen yew
- */
 public class LinkedList<T> implements ListInterface<T> {
 
     private Node firstNode;
@@ -26,6 +22,35 @@ public class LinkedList<T> implements ListInterface<T> {
         totalNumberData = 0;
     }
 
+    public Iterator<T> getIterator() {
+        return new LinkedListIterator();
+    }
+
+    private class LinkedListIterator implements Iterator<T> {
+
+        private Node currentNode;
+
+        public LinkedListIterator() {
+            currentNode = firstNode;
+        }
+
+        @Override
+        public boolean hasNext() {
+            return currentNode != null;
+        }
+
+        @Override
+        public T next() {
+            if (hasNext()) {
+                T returnData = currentNode.data;
+                currentNode = currentNode.next;
+                return returnData;
+            } else {
+                return null;
+            }
+        }
+    }
+
     @Override
     public boolean add(T newData) {
         Node newNode = new Node(newData);
@@ -33,7 +58,7 @@ public class LinkedList<T> implements ListInterface<T> {
         if (!isEmpty()) {
             Node lastNode = getLastNode();
             lastNode.next = newNode;
-        } else {                      
+        } else {
             firstNode = newNode;
         }
 
@@ -41,8 +66,8 @@ public class LinkedList<T> implements ListInterface<T> {
         return true;
     }
 
-    @Override   
-    public boolean add(int newPosition, T newData) { 
+    @Override
+    public boolean add(int newPosition, T newData) {
         if (newPosition < 1 || newPosition > totalNumberData + 1) {
             return false; // Invalid position
         }
@@ -102,6 +127,29 @@ public class LinkedList<T> implements ListInterface<T> {
     }
 
     @Override
+    public int getIndex(T anEntry) {
+        boolean found = false;
+        int index = 1;
+        Node currentNode = firstNode;
+
+        while (!found && (currentNode != null)) {
+            if (anEntry.equals(currentNode.data)) {
+                found = true;
+            } else {
+                currentNode = currentNode.next;
+                index++;
+            }
+
+            if (found) {
+                return index;
+            } else {
+                return -1;
+            }
+        }
+        return index;
+    }
+
+    @Override
     public boolean contains(T data) {
 
         for (int i = 1; i <= totalNumberData; i++) {
@@ -140,7 +188,7 @@ public class LinkedList<T> implements ListInterface<T> {
     }
 
     @Override
-    public ListInterface<T> searchByCriteria(Predicate<T> criteria) {
+    public ListInterface<T> search(Predicate<T> criteria) {
         ListInterface<T> matchingData = new LinkedList<>();
 
         Node currentNode = firstNode;
@@ -154,9 +202,8 @@ public class LinkedList<T> implements ListInterface<T> {
         return matchingData;
     }
 
-    
     private class Node {
-        
+
         private T data;
         private Node next;
 
@@ -170,17 +217,17 @@ public class LinkedList<T> implements ListInterface<T> {
             this.next = next;
         }
     }
-    
+
     private Node getLastNode() {
-        
+
         Node currentNode = firstNode;
         while (currentNode.next != null) {
             currentNode = currentNode.next;
         }
-        
+
         return currentNode;
     }
-    
+
     private Node getNodeAt(int position) {
         Node currentNode = firstNode;
         for (int i = 1; i < position; i++) {
