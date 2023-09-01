@@ -6,19 +6,24 @@ package adt;
 
 /**
  *
- * @author chook
+ * @author user
  */
 public interface StackInterface<T> {
-
-    public void push(T newData);
-
+    
+    public void push(T newEntry);
+    
     public T pop();
-
+    
     public T peek();
-
-    public int getTotalNumberData();
     
     public boolean isEmpty();
-
-    public void reset();
+    
+    public boolean clear();
+    
+    public boolean isFull();
+    
+    // for checking how many history is made
+    public int size();
+    
+    
 }
