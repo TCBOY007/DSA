@@ -4,7 +4,7 @@
  */
 package asg;
 
-import adt.LinkedList;
+import adt.*;
 import entity.Course;
 import controller.CourseController;
 import java.time.LocalDateTime;
@@ -21,10 +21,13 @@ public class CourseUI {
     private LinkedList<Course> courseList = new LinkedList<>();
     private CourseController cc = new CourseController();
     Scanner scanner = new Scanner(System.in);
+    Logo logo = new Logo();
 
     public void courseMenu() {
 
         int selection = 0;
+        cc.initializeData();
+        logo.logo();
 
         do {
             DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
@@ -40,6 +43,8 @@ public class CourseUI {
             System.out.println("| 1. Add Course \t\t\t\t |");
             System.out.println("| 2. Remove Course  \t\t\t\t |");
             System.out.println("| 3. Display Course \t\t\t\t |");
+            System.out.println("| 4. Search Course  \t\t\t\t |");
+            System.out.println("| 5. Modify Course  \t\t\t\t |");
             System.out.println("| 0. Back\t\t\t\t\t |");
             System.out.println("=================================================");
 
@@ -50,14 +55,9 @@ public class CourseUI {
                 do {
                     try {
 
-                        Scanner sc = new Scanner(System.in);
+                        //scanner.nextLine();
                         System.out.println("Enter your selection : ");
-                        selection = sc.nextInt();
-
-                        while (chkIgnoreString > 0) {
-                            scanner.nextLine();
-                            break;
-                        }
+                        selection = scanner.nextInt();
 
                     } catch (Exception e) {
                         // accept integer only.
@@ -68,26 +68,36 @@ public class CourseUI {
                 } while (flag == true);
 
                 chkIgnoreString++;
-                Logo logo = new Logo();
 
                 switch (selection) {
 
                     case 1:
+                        logo.logo();
                         addMenu();
                         break;
                     case 2:
+                        logo.logo();
                         removeMenu();
                         break;
 
                     case 3:
+                        logo.logo();
                         display();
+
                         break;
 
                     case 4:
+                        logo.logo();
+                        searchMenu();
+                        break;
 
                     case 5:
+                        logo.logo();
+                        modifyMenu();
+                        break;
 
                     case 0:
+                        logo.logo();
                         asg asg = new asg();
                         asg.mainMenu();
                         break;
@@ -106,8 +116,8 @@ public class CourseUI {
 
     public void addMenu() {
 
-        int chkIgnoreString = 0;
         int selection = 0;
+        int chkIgnoreString = 0;
 
         do {
             DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
@@ -128,17 +138,13 @@ public class CourseUI {
             do {
 
                 boolean flag = false;
-
+                selection = 0;
                 do {
                     try {
-                        Scanner sc = new Scanner(System.in);
-                        System.out.println("Enter your selection : ");
-                        selection = sc.nextInt();
 
-                        while (chkIgnoreString > 0) {
-                            scanner.nextLine();
-                            break;
-                        }
+                        System.out.println("Enter your selection : ");
+                        selection = scanner.nextInt();
+                        scanner.nextLine();
 
                     } catch (Exception e) {
                         // accept integer only.
@@ -148,7 +154,7 @@ public class CourseUI {
 
                 } while (flag == true);
 
-                chkIgnoreString ++;
+                chkIgnoreString++;
                 Logo logo = new Logo();
 
                 switch (selection) {
@@ -160,42 +166,54 @@ public class CourseUI {
                         cc.addByPosition();
                         break;
 
-                    case 3:
-
-                        break;
-
                     case 0:
                         courseMenu();
                         break;
 
                     default:
 
-                        System.out.println("Wrong Input , Please only type 1-5");
+                        System.out.println("Wrong Input , Please only type 0-2");
                         break;
                 }
-                
-              
 
-            } while (selection < 0 || selection > 3);
+            } while (selection < 0 || selection > 2);
 
         } while (selection != 0);
 
     }
 
-  
-
     public void removeMenu() {
 
-       
+        char continueRemove;
+        int selection = 0;
+
+        do {
+
+            cc.removeByPosition();
+
+            System.out.println("Continue to remove (y/n) : ");
+            continueRemove = scanner.next().toUpperCase().charAt(0);
+
+            if (continueRemove == 'N') {
+                courseMenu();
+            } else if (continueRemove != 'Y' && continueRemove != 'N') {
+                System.out.println("Invalid Option, Please only Enter (Y/N) :");
+            }
+
+        } while (continueRemove != 'Y' || continueRemove != 'N');
+
+    }
+
+    public void searchMenu() {
+
         int chkIgnoreString = 0;
         int selection = 0;
 
         do {
-            System.out.println("How would you like to remove the course?");
+            System.out.println("How would you like to search the course?");
             System.out.println("===========");
             System.out.println("1. By Name");
             System.out.println("2. By Course Id");
-            System.out.println("3. By Number (1-" + courseList.getTotalNumberData() + ")");
             System.out.println("0. Back to Course Menu");
             System.out.println("===========");
 
@@ -209,28 +227,27 @@ public class CourseUI {
                         System.out.println("Enter your selection : ");
                         selection = sc.nextInt();
 
-                        while (chkIgnoreString > 0) {
-                            scanner.nextLine();
-                            break;
-                        }
-
                     } catch (Exception e) {
                         // accept integer only.
                         System.out.println("\n\nWrong input ! Please only type Integer ! \n\n");
                         flag = true;
                     }
 
+                    chkIgnoreString++;
+
                     switch (selection) {
 
                         case 1:
-                            cc.removeByName();
+                            searchByName();
+                            pressToContinue();
                             break;
                         case 2:
-                            cc.removeById();
+                            searchById();
+                            pressToContinue();
                             break;
-                        case 3:
-                            cc.removeByPosition();
-                            break;
+                        case 0:
+                            logo.logo();
+                            courseMenu();
                         default:
                             System.out.println("Invalid option! Please try again!");
                             break;
@@ -239,28 +256,133 @@ public class CourseUI {
 
                 } while (flag == true);
 
-                chkIgnoreString++;
-                loadScreen("remove");
-
-            } while (selection < 0 || selection > 3);
+            } while (selection < 0 || selection > 2);
         } while (selection != 0);
 
     }
 
+    public void searchByName() {
+
+        System.out.println("Enter the name of the course");
+        String courseName = scanner.nextLine();
+
+        ListInterface<Course> listByName = cc.searchName(courseName.toUpperCase());
+
+        if (listByName.isEmpty()) {
+            System.out.println("Course not found");
+
+        } else {
+            cc.display(listByName);
+        }
+    }
+
+    public void searchById() {
+        System.out.println("Enter the ID of the course");
+        String courseID = scanner.nextLine();
+
+        ListInterface<Course> listByID = cc.searchID(courseID.toUpperCase());
+
+        if (listByID.isEmpty()) {
+            System.out.println("Course not found");
+            System.out.println("\nPress ENTER key to continue");
+            try {
+                System.in.read();
+            } catch (Exception e) {
+            }
+        } else {
+            cc.display(listByID);
+        }
+    }
+
     public void display() {
 
-        System.out.println("HERE");
         cc.displayAll();
+        pressToContinue();
+    }
 
-        loadScreen("display");
+    public void modifyMenu() {
+
+        int selection = 0;
+        char continueModify;
+        int index = 0;
+        do {
+            do {
+                cc.displayAll();
+                System.out.println("====================================================================");
+                System.out.println("|Select the Index that you would like to modify (0 to back )|");
+                System.out.println("====================================================================");
+
+                do {
+                    System.out.println("Enter your selection from (0-" + cc.getSize() + ")");
+                    index = scanner.nextInt();
+
+                    if (index < 0 || index > cc.getSize()) {
+                        System.out.println("Invalid option! Please Try Again !");
+                    }
+
+                } while (index < 0 || index > cc.getSize());
+
+                DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+                LocalDateTime myDateObj = LocalDateTime.now();
+                String formattedDate = myDateObj.format(myFormatObj);
+                System.out.println(formattedDate);
+
+                System.out.println("=================================================");
+                System.out.println("|\tHow Would you like to modify Course\t|");
+                System.out.println("=================================================");
+                System.out.println("| Please Enter Your Selection \t\t\t | ");
+                System.out.println("| 1. Course Code  \t\t\t\t |");
+                System.out.println("| 2. Course Name \t\t\t\t |");
+                System.out.println("| 3. Course Description \t\t\t |");
+                System.out.println("| 4. Course Credit Hour \t\t\t |");
+                System.out.println("| 5. Course Fee \t\t\t\t |");
+                System.out.println("| 0. Back\t\t\t\t\t |");
+                System.out.println("=================================================");
+
+                System.out.println("Enter Your Selection :");
+                selection = scanner.nextInt();
+                scanner.nextLine();
+
+                switch (selection) {
+                    case 1:
+                        cc.modifyByCode(index);
+                        break;
+                    case 2:
+                        cc.modifyByName(index);
+                        break;
+                    case 3:
+                        cc.modifyCourseDescription(index);
+                        break;
+                    case 4:
+                        cc.modifyCreditHour(index);
+                        break;
+                    case 5:
+                        cc.modifyCourseFee(index);
+                        break;
+                    case 0:
+                        courseMenu();
+                        break;
+                    default:
+                        System.out.println("Invalid option ! Please try again !");
+                        break;
+                }
+
+            } while (selection < 0 || selection > 5);
+
+            do {
+
+                System.out.println("Continue Modify ? (Y/N) :");
+                continueModify = scanner.next().toUpperCase().charAt(0);
+
+            } while (continueModify != 'Y' && continueModify != 'N');
+        } while (continueModify == 'Y');
 
     }
 
+    public static void loadScreen(String action) {
+        System.out.print(action + "ing");
 
-    public static void loadScreen(String action){
-        System.out.print(action+"ing");
-
-        for (int i = 0; i < 7; i++) {
+        for (int i = 0; i < 5; i++) {
             System.out.print(".");
             try {
                 Thread.sleep(500); // Pause for half a second
@@ -269,6 +391,18 @@ public class CourseUI {
             }
         }
 
-        System.out.println(action+" complete!");
+        System.out.println(action + " complete!");
+        try {
+            Thread.sleep(800); // Pause for half a second
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public static void pressToContinue() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Press Enter to continue...");
+        scanner.nextLine();
     }
 }
