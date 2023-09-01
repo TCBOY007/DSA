@@ -4,14 +4,16 @@
  */
 package adt;
 
+import java.util.Iterator;
 import java.util.function.Predicate;
 
 /**
  *
- * @author chook zhen yew
+ * @author chenc
  */
 public interface ListInterface<T> {
-    
+
+    public Iterator<T> getIterator();
 
     public boolean add(T newdata);
 
@@ -26,12 +28,15 @@ public interface ListInterface<T> {
     public T getData(int position);
 
     public boolean contains(T data);
-    
-    public ListInterface<T> searchByCriteria(Predicate<T> criteria);
-    
+
+    public ListInterface<T> search(Predicate<T> criteria);
+
     public int getTotalNumberData();
 
     public boolean isEmpty();
 
     public boolean isFull();
+
+    public int getIndex(T anEntry);
+
 }
