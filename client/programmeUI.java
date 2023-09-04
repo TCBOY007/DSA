@@ -299,7 +299,7 @@ public class programmeUI {
                                     System.out.print("Search by Name: ");
                                     String nameInput = scanner.nextLine();
                                     
-                                    ListInterface<Programme> listByName = progManage.searchProgramme(nameInput.toUpperCase(), "name");
+                                    LinkedListInterface<Programme> listByName = progManage.searchProgramme(nameInput.toUpperCase(), "name");
                                     betterUI.loadingScreen("Searching");
                                     progManage.addHistory("Searched for (" + nameInput +")" + " by progamme name");
                                     
@@ -315,7 +315,7 @@ public class programmeUI {
                                 case 2:
                                     System.out.print("Search by Code: ");
                                     String codeInput = scanner.nextLine();
-                                    ListInterface<Programme> listByCode = progManage.searchProgramme(codeInput.toUpperCase(), "code");
+                                    LinkedListInterface<Programme> listByCode = progManage.searchProgramme(codeInput.toUpperCase(), "code");
                                     betterUI.loadingScreen("Searching");
                                     progManage.addHistory("Searched for (" + codeInput + ")" + " by programme code");
                                     
@@ -363,7 +363,7 @@ public class programmeUI {
 
                                     } while (chk);
 
-                                    ListInterface<Programme> listByType = progManage.searchProgramme(typeInput, "type");
+                                    LinkedListInterface<Programme> listByType = progManage.searchProgramme(typeInput, "type");
                                     betterUI.loadingScreen("Searching");
                                     progManage.addHistory("Searched for (" + typeInput + ")" + " by progamme type");
                                     
@@ -774,14 +774,260 @@ public class programmeUI {
     
     public static void addTutGroupToProgramme(){
         
+        int index = 0, choice =0;
+        boolean chkInput;
+        boolean chkInput2;
+
+
+                do {
+                    chkInput = true;
+
+                    progManage.printAll();
+                    System.out.println("\n");
+                    System.out.print("Select the index of programme to add tutorial group: ");
+
+                    if (scanner.hasNextInt()) {
+                        index = scanner.nextInt();
+                        chkInput = false;
+                        // Consume the newline character left in the buffer
+                        // after scan int, it will ignore the first coming scan line
+                        scanner.nextLine();
+                        
+                        if (index >= 1 && index <= progManage.searchProgramme("", "").getTotalNumberData()) {
+                            
+                            do{
+                                chkInput2 = true;
+                                Programme tempProg = progManage.searchProgramme("", "").getData(index);
+                                ListInterface<TutorialGroup> tempTGList = progManage.getAllTutorialGroupList();
+                                
+                                    do{
+                                        
+                                        System.out.println("\n");
+                                        System.out.println("==========================================================");
+                                        System.out.println("Programe selected: " + tempProg.getProgrammeName());
+                                        System.out.println("==========================================================");
+                                        System.out.println("The available tutorial group for current programme to add: ");
+                                        
+                                        
+                                        
+                                        for(int i =1; i<= tempTGList.getNumberOfEntries(); i++){
+                                            if(!tempTGList.getEntry(i).equals(tempProg.getTutorialGroups().getEntry(i))){
+                                                System.out.println("[" + i + "]");
+                                                System.out.println(tempTGList.getEntry(i));
+                                            }
+                                            
+                                            
+                                        }
+                                        
+                                        
+                                        System.out.println("----------------------");
+                                        System.out.print("Tutorial group index: ");
+
+                                        if (scanner.hasNextInt()) {
+                                            chkInput2 = false;
+                                            choice = scanner.nextInt();
+
+                                            // Consume the newline character left in the buffer
+                                            // after scan int, it will ignore the first coming scan line
+                                            scanner.nextLine();
+                                            
+                                            
+                                            if(choice >= 1 && choice <= tempTGList.getNumberOfEntries()){
+                                                TutorialGroup tempTG = tempTGList.getEntry(choice);
+                                                tempProg.getTutorialGroups().adddata(tempTG);
+                                                
+                                                progManage.addHistory("Added new tutorial group (id = " + tempTGList.getEntry(choice).getTutorialGroupID() + ") to programme (" + tempProg.getProgrammeName() + ")");
+                                                betterUI.loadingScreen("Adding");
+                                                
+                                                
+                                            }
+                                            else{
+                                                scanner.nextLine();
+                                                System.out.print("Invalid Input! Please try again later");
+                                                betterUI.pauseFor2Second();
+                                                betterUI.systemCls();
+                                            }
+                                            
+                                            
+
+                                        } else {
+                                            scanner.nextLine();
+                                            System.out.print("Invalid Input! Please try again later");
+                                            betterUI.pauseFor2Second();
+                                            betterUI.systemCls();
+                                        }
+                                        
+                                        
+                                    }while(choice < 1 || choice > tempTGList.getNumberOfEntries());
+                                
+
+                            }while(chkInput2);
+                            
+                            
+                    } else {
+                        scanner.nextLine();
+                        System.out.println("Invalid option! Please enter a valid index\n");
+                    }
+
+                }else {
+                        scanner.nextLine();
+                        System.out.println("Invalid input! Please enter a valid index\n");
+                    }
+                    
+                }while (chkInput);
     }
     
     public static void removeTutGroupFromProgramme(){
         
+        int index = 0, choice = 0;
+        boolean chkInput;
+        boolean chkInput2;
+
+        do {
+            chkInput = true;
+
+            progManage.printAll();
+            System.out.println("\n");
+            System.out.print("Select the index of programme to remove tutorial group: ");
+
+            if (scanner.hasNextInt()) {
+                index = scanner.nextInt();
+                chkInput = false;
+                // Consume the newline character left in the buffer
+                // after scan int, it will ignore the first coming scan line
+                scanner.nextLine();
+
+                if (index >= 1 && index <= progManage.searchProgramme("", "").getTotalNumberData()) {
+
+                    do {
+                        chkInput2 = true;
+                        Programme tempProg = progManage.searchProgramme("", "").getData(index);
+                        ListInterface<TutorialGroup> tempTGList = progManage.getAllTutorialGroupList();
+
+                        do {
+
+                            System.out.println("\n");
+                            System.out.println("==========================================================");
+                            System.out.println("Programe selected: " + tempProg.getProgrammeName());
+                            System.out.println("==========================================================");
+                            System.out.println("The available tutorial group for current programme to add: ");
+
+                            for (int i = 1; i <= tempTGList.getNumberOfEntries(); i++) {
+                                if (tempTGList.getEntry(i).equals(tempProg.getTutorialGroups())) {
+                                    System.out.println("[" + i + "]");
+                                    System.out.println(tempTGList.getEntry(i));
+                                }
+
+                            }
+
+                            System.out.println("----------------------");
+                            System.out.print("Tutorial group index: ");
+
+                            if (scanner.hasNextInt()) {
+                                chkInput2 = false;
+                                choice = scanner.nextInt();
+
+                                // Consume the newline character left in the buffer
+                                // after scan int, it will ignore the first coming scan line
+                                scanner.nextLine();
+
+                                if (choice >= 1 && choice <= tempTGList.getNumberOfEntries()) {
+                                    TutorialGroup tempTG = tempTGList.getEntry(choice);
+                                    tempProg.getTutorialGroups().remove(choice);
+
+                                    progManage.addHistory("Remove tutorial group (id = " + tempTGList.getEntry(choice).getTutorialGroupID() + ") from programme (" + tempProg.getProgrammeName() + ")");
+                                    betterUI.loadingScreen("Removing");
+
+                                } else {
+                                    scanner.nextLine();
+                                    System.out.print("Invalid Input! Please try again later");
+                                    betterUI.pauseFor2Second();
+                                    betterUI.systemCls();
+                                }
+
+                            } else {
+                                scanner.nextLine();
+                                System.out.print("Invalid Input! Please try again later");
+                                betterUI.pauseFor2Second();
+                                betterUI.systemCls();
+                            }
+
+                        } while (choice < 1 || choice > tempTGList.getNumberOfEntries());
+
+                    } while (chkInput2);
+
+                } else {
+                    scanner.nextLine();
+                    System.out.println("Invalid option! Please enter a valid index\n");
+                }
+
+            } else {
+                scanner.nextLine();
+                System.out.println("Invalid input! Please enter a valid index\n");
+            }
+
+        } while (chkInput);
     }
     
     public static void listTutGroupForProgramme(){
         
+        LinkedListInterface<Programme> tempProgList = progManage.searchProgramme("", "");
+          
+        
+        int index = 0;
+        boolean chkInput;
+
+        do {
+            chkInput = true;
+
+            progManage.printAll();
+            System.out.println("\n");
+            System.out.print("Select the index of programme to show tutorial group: ");
+
+            if (scanner.hasNextInt()) {
+                index = scanner.nextInt();
+                chkInput = false;
+                // Consume the newline character left in the buffer
+                // after scan int, it will ignore the first coming scan line
+                scanner.nextLine();
+
+                if (index >= 1 && index <= progManage.searchProgramme("", "").getTotalNumberData()) {
+                        Programme tempProg = progManage.searchProgramme("", "").getData(index);
+
+
+                            System.out.println("\n");
+                            System.out.println("==========================================================");
+                            System.out.println("Programe selected: " + tempProg.getProgrammeName());
+                            System.out.println("==========================================================");
+                            System.out.println("The tutorial group for current programme: ");
+
+                            
+                            if(tempProg.getTutorialGroups() == null){
+                                System.out.println("\tThis programme currently has no tutorial groups");
+                                
+                            }else{
+                                for (int i = 1; i <= tempProg.getTutorialGroups().getNumberOfEntries(); i++) {
+                                    System.out.println("[" + i + "]");
+                                    System.out.println(tempProg.getTutorialGroups().getEntry(i));
+
+                                }
+
+                                progManage.addHistory("Listing tutorial groups for programme (" + tempProg.getProgrammeName() + ")");
+                            }
+                           
+
+
+                } else {
+                    scanner.nextLine();
+                    System.out.println("Invalid option! Please enter a valid index\n");
+                }
+
+            } else {
+                scanner.nextLine();
+                System.out.println("Invalid input! Please enter a valid index\n");
+            }
+
+        } while (chkInput);
     }
     
     
