@@ -6,10 +6,10 @@ import java.util.Scanner;
 public class TutorUI {
 
     Scanner scanner = new Scanner(System.in);
-    Instructor instructor;
+    static Instructor instructor;
 
     public TutorUI(Instructor instructor) {
-        this.instructor = instructor;
+        TutorUI.instructor = instructor;
     }
 
     public int getMenuChoice() {
@@ -231,7 +231,7 @@ public class TutorUI {
                 pressEnter();
                 systemCls();
             }
-        } while (isLetter(searchKey));
+        } while (!isLetter(searchKey));
         System.out.println("");
         return searchKey;
     }
