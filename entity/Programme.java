@@ -4,7 +4,7 @@
  */
 package entity;
 
-import adt.LinkedList;
+import adt.*;
 
 /**
  *
@@ -17,7 +17,7 @@ public class Programme {
     private int programmeDuration;          // in terms of year
     private double programmeFee;            // 2 decimal place
     
-    private LinkedList<TutorialGroup> tutorialGroups;    // list of tutorial groups involved (gonna change data type)
+    private ListInterface<TutorialGroup> tutorialGroups;    // list of tutorial groups involved
 
     public Programme() {
     }
@@ -28,6 +28,7 @@ public class Programme {
         this.programmeType = programmeType;
         this.programmeDuration = programmeDuration;
         this.programmeFee = programmeFee;
+        this.tutorialGroups = new ArrayList<TutorialGroup>();
     }
 
     
@@ -75,8 +76,23 @@ public class Programme {
         this.programmeFee = programmeFee;
     }
 
+    public ListInterface<TutorialGroup> getTutorialGroups() {
+        return tutorialGroups;
+    }
+
+    public void setTutorialGroups(ListInterface<TutorialGroup> tutorialGroups) {
+        this.tutorialGroups = tutorialGroups;
+    }
+
+    
+
+    @Override
+    public String toString() {
+        return "Programme{" + "programmeName=" + programmeName + ", programmeCode=" + programmeCode + ", programmeType=" + programmeType + ", programmeDuration=" + programmeDuration + ", programmeFee=" + programmeFee + ", tutorialGroups=" + tutorialGroups + '}';
+    }
 
 
+    
 
     
     
