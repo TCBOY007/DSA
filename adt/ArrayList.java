@@ -13,96 +13,87 @@ import java.util.function.Predicate;
 public class ArrayList<T> implements ListInterface<T> {
 
     private T[] array;
-    private int numberOfEntries;
-    private static final int DEFAULT_CAPACITY = 5;
+    private int numberOfInput;
+    private static final int DEFAULT_SIZE = 5;
 
     public ArrayList() {
-        this(DEFAULT_CAPACITY);
+        this(DEFAULT_SIZE);
     }
 
     public ArrayList(int initialCapacity) {
-        numberOfEntries = 0;
+        numberOfInput = 0;
         array = (T[]) new Object[initialCapacity];
     }
 
     @Override
-    public boolean add(T newEntry) {
+    public boolean add(T newInput) {
         if (isArrayFull()) {
             doubleArray();
         }
-        array[numberOfEntries] = newEntry;
-        numberOfEntries++;
+        array[numberOfInput] = newInput;
+        numberOfInput++;
         return true;
     }
 
-    // @can use for at tutori to tutorial group
     @Override
     public boolean add(int newPosition, T newEntry) {
-        boolean isSuccessful = true;
+        boolean successful = true;
 
-        if ((newPosition >= 1) && (newPosition <= numberOfEntries + 1)) {
+        if ((newPosition >= 0) && (newPosition <= numberOfInput - 1)) {
             if (isArrayFull()) {
                 doubleArray();
             }
-            array[newPosition - 1] = newEntry;
-            numberOfEntries++;
+            array[newPosition] = newEntry;
+            numberOfInput++;
         } else {
-            isSuccessful = false;
+            successful = false;
         }
-
-        return isSuccessful;
+        return successful;
     }
 
     @Override
     public T remove(int givenPosition) {
         T result = null;
+        if ((givenPosition >= 0) && (givenPosition <= numberOfInput - 1)) {
+            result = array[givenPosition];
 
-        if ((givenPosition >= 1) && (givenPosition <= numberOfEntries)) {
-            result = array[givenPosition - 1];
-
-            if (givenPosition < numberOfEntries) {
+            if (givenPosition < numberOfInput) {
                 removeGap(givenPosition);
             }
-
-            numberOfEntries--;
+            numberOfInput--;
         }
-
         return result;
     }
 
     @Override
     public void clear() {
-        numberOfEntries = 0;
+        numberOfInput = 0;
     }
 
     @Override
     public boolean replace(int givenPosition, T newEntry) {
         boolean isSuccessful = true;
-
-        if ((givenPosition >= 1) && (givenPosition <= numberOfEntries)) {
-            array[givenPosition - 1] = newEntry;
+        if ((givenPosition >= 0) && (givenPosition <= numberOfInput - 1)) {
+            array[givenPosition] = newEntry;
         } else {
             isSuccessful = false;
         }
-
         return isSuccessful;
     }
 
     @Override
     public T getEntry(int givenPosition) {
         T result = null;
-
-        if ((givenPosition >= 1) && (givenPosition <= numberOfEntries)) {
-            result = array[givenPosition - 1];
+        if ((givenPosition >= 0) && (givenPosition <= numberOfInput - 1)) {
+            result = array[givenPosition];
         }
-
         return result;
     }
 
     @Override
     public boolean contains(T anEntry) {
         boolean found = false;
-        for (int index = 0; !found && (index < numberOfEntries); index++) {
+        for (int index = 0; !found && (index < numberOfInput); index++) {
             if (anEntry.equals(array[index])) {
                 found = true;
             }
@@ -112,17 +103,12 @@ public class ArrayList<T> implements ListInterface<T> {
 
     @Override
     public int getNumberOfEntries() {
-        return numberOfEntries;
+        return numberOfInput;
     }
 
     @Override
     public boolean isEmpty() {
-        return numberOfEntries == 0;
-    }
-
-    @Override
-    public boolean isFull() {
-        return false;
+        return numberOfInput == 0;
     }
 
     private void doubleArray() {
@@ -134,48 +120,44 @@ public class ArrayList<T> implements ListInterface<T> {
     }
 
     private boolean isArrayFull() {
-        return numberOfEntries == array.length;
+        return numberOfInput == array.length;
     }
 
     @Override
     public String toString() {
         String outputStr = "";
-        for (int index = 0; index < numberOfEntries; ++index) {
+        for (int index = 0; index < numberOfInput; ++index) {
             outputStr += array[index] + "\n";
         }
-
         return outputStr;
     }
 
     @Override
     public T searchByCriteria(Predicate<T> criteria) {
-        for (int index = 0; index < numberOfEntries; index++) {
+        for (int index = 0; index < numberOfInput; index++) {
             T entry = array[index];
             if (criteria.test(entry)) {
-                return entry; // Return the first entry that satisfies the criteria
+                return entry;
             }
         }
-        return null; // Return null if no entry satisfies the criteria
+        return null;
     }
 
     private void removeGap(int givenPosition) {
-        // move each entry to next lower position starting at entry after the
-        // one removed and continuing until end of array
-        int removedIndex = givenPosition - 1;
-        int lastIndex = numberOfEntries - 1;
-
+        int removedIndex = givenPosition;
+        int lastIndex = numberOfInput - 1;
         for (int index = removedIndex; index < lastIndex; index++) {
             array[index] = array[index + 1];
         }
     }
-
-        
-    //Add
+    
+    
+        //Add
     //======================================================
     @Override
     public boolean validation(int getPosition) {
         boolean result = true;
-        if (numberOfEntries <= getPosition - 1) {
+        if (numberOfInput <= getPosition - 1) {
             result = false;
         }
 
