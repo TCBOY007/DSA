@@ -165,8 +165,8 @@ public class TutorUI {
         System.out.println(String.format("%1s %3s %-6s %-20s %-7s %5s %-25s %-22s %1s",
                 "|", "No.", "Code", "Name", "Gender", "", "Email", "Education Qualification", "|"));
         System.out.println("+=================================================================================================+");
-        for (int i = 1; i <= instructor.getTutorListSize(); i++) {
-            System.out.println("| " + i + ".  " + instructor.getTutor(i) + "|");
+        for (int i = 0; i < instructor.getTutorListSize(); i++) {
+            System.out.println("| " + (i + 1) + ".  " + instructor.getTutor(i) + "|");
         }
         System.out.println("+=================================================================================================+");
         System.out.println("");
@@ -280,7 +280,7 @@ public class TutorUI {
         } while (rowChoice < 1 || rowChoice > choiceSize);
 
         System.out.println("");
-        return rowChoice;
+        return rowChoice - 1;
     }
 
     public int modifyCondition() {
@@ -338,7 +338,7 @@ public class TutorUI {
     }
 
     // Delete Function
-    public int deleteTutorByROw() {
+    public int deleteTutorByRow() {
         int rowSize = instructor.getTutorListSize();
         int rowDelete;
         char comfirm;
@@ -363,8 +363,6 @@ public class TutorUI {
             System.out.print("Are you sure want to delete(Y/N)? : ");
             comfirm = scanner.nextLine().charAt(0);
             comfirm = Character.toUpperCase(comfirm);
-            System.out.println(comfirm);
-
             if (comfirm != 'N' && comfirm != 'Y') {
                 System.out.println("Invalid Input! Y/N only");
                 System.out.print("Press enter to continue");
