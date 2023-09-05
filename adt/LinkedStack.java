@@ -8,7 +8,7 @@ package adt;
  *
  * @author chook
  */
-public class LinkedStack<T> implements StackInterface<T> {
+public class LinkedStack<T> implements LinkedStackInterface<T> {
     private Node topNode;
     private int totalNumberData;
 
