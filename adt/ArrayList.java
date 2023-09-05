@@ -36,14 +36,14 @@ public class ArrayList<T> implements ListInterface<T> {
     }
 
     @Override
-    public boolean add(int newPosition, T newEntry) {
+    public boolean add(int newPosition, T newInput) {
         boolean successful = true;
 
         if ((newPosition >= 0) && (newPosition <= numberOfInput - 1)) {
             if (isArrayFull()) {
                 doubleArray();
             }
-            array[newPosition] = newEntry;
+            array[newPosition] = newInput;
             numberOfInput++;
         } else {
             successful = false;
@@ -132,17 +132,6 @@ public class ArrayList<T> implements ListInterface<T> {
         return outputStr;
     }
 
-    @Override
-    public T searchByCriteria(Predicate<T> criteria) {
-        for (int index = 0; index < numberOfInput; index++) {
-            T entry = array[index];
-            if (criteria.test(entry)) {
-                return entry;
-            }
-        }
-        return null;
-    }
-
     private void removeGap(int givenPosition) {
         int removedIndex = givenPosition;
         int lastIndex = numberOfInput - 1;
@@ -151,8 +140,7 @@ public class ArrayList<T> implements ListInterface<T> {
         }
     }
     
-    
-        //Add
+    //Add
     //======================================================
     @Override
     public boolean validation(int getPosition) {
