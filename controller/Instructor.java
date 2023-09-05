@@ -55,7 +55,7 @@ public class Instructor {
 
     public ListInterface<Tutor> searchTutor(Predicate<Tutor> predicate) {
         ListInterface<Tutor> listByName = new ArrayList<>();
-        for (int i = 1; i <= tutorList.getNumberOfEntries(); i++) {
+        for (int i = 0; i <= tutorList.getNumberOfEntries(); i++) {
             if (predicate.test(tutorList.getEntry(i))) {
                 listByName.add(tutorList.getEntry(i));
             }
