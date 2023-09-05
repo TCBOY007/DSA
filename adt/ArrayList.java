@@ -168,5 +168,18 @@ public class ArrayList<T> implements ListInterface<T> {
             array[index] = array[index + 1];
         }
     }
+
+        
+    //Add
+    //======================================================
+    @Override
+    public boolean validation(int getPosition) {
+        boolean result = true;
+        if (numberOfEntries <= getPosition - 1) {
+            result = false;
+        }
+
+        return result;
+    }
     
 }
