@@ -12,7 +12,7 @@ import java.util.Scanner;
 
 /**
  *
- * @author chook
+ * @author chook zhen yew
  */
 public class programmeUI {
     static Scanner scanner = new Scanner(System.in);
