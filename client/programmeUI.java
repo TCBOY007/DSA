@@ -19,7 +19,7 @@ public class programmeUI {
     static programmeManagement progManage = new programmeManagement();
         
     public static void programmeMainMenu(){
-        progManage.initializeData();
+        
         int choice =0;
         boolean chkInput;
         
@@ -800,26 +800,24 @@ public class programmeUI {
                                 Programme tempProg = progManage.searchProgramme("", "").getData(index);
                                 ListInterface<TutorialGroup> tempTGList = progManage.getAllTutorialGroupList();
                                 
-                                    do{
-                                        
+                                if(tempProg.getTutorialGroups().getNumberOfEntries() != tempTGList.getNumberOfEntries()){
+                                    do {
+
                                         System.out.println("\n");
                                         System.out.println("==========================================================");
                                         System.out.println("Programe selected: " + tempProg.getProgrammeName());
                                         System.out.println("==========================================================");
                                         System.out.println("The available tutorial group for current programme to add: ");
-                                        
-                                        
-                                        
-                                        for(int i =1; i<= tempTGList.getNumberOfEntries(); i++){
-                                            if(!tempTGList.getEntry(i).equals(tempProg.getTutorialGroups().getEntry(i))){
+
+                                        for (int i = 1; i <= tempTGList.getNumberOfEntries(); i++) {
+                                            //!tempTGList.getEntry(i).equals(tempProg.getTutorialGroups().getEntry(i))
+                                            if (!tempProg.getTutorialGroups().contains(tempTGList.getEntry(i))) {
                                                 System.out.println("[" + i + "]");
                                                 System.out.println(tempTGList.getEntry(i));
                                             }
-                                            
-                                            
+
                                         }
-                                        
-                                        
+
                                         System.out.println("----------------------");
                                         System.out.print("Tutorial group index: ");
 
@@ -830,25 +828,23 @@ public class programmeUI {
                                             // Consume the newline character left in the buffer
                                             // after scan int, it will ignore the first coming scan line
                                             scanner.nextLine();
-                                            
-                                            
-                                            if(choice >= 1 && choice <= tempTGList.getNumberOfEntries()){
+
+                                            if (choice >= 1 && choice <= tempTGList.getNumberOfEntries()) {
                                                 TutorialGroup tempTG = tempTGList.getEntry(choice);
-                                                tempProg.getTutorialGroups().adddata(tempTG);
-                                                
-                                                progManage.addHistory("Added new tutorial group (id = " + tempTGList.getEntry(choice).getTutorialGroupID() + ") to programme (" + tempProg.getProgrammeName() + ")");
-                                                betterUI.loadingScreen("Adding");
-                                                
-                                                
-                                            }
-                                            else{
-                                                scanner.nextLine();
+
+                                                if (progManage.addTutGrpToProg(tempProg, tempTG)) {
+                                                    progManage.addHistory("Added new tutorial group (id = " + tempTGList.getEntry(choice).getTutorialGroupID() + ") to programme (" + tempProg.getProgrammeName() + ")");
+                                                    betterUI.loadingScreen("Adding");
+                                                } else {
+                                                    System.out.println("No tutorial group was added as choice selected was existed in the programme");
+                                                }
+
+                                            } else {
+
                                                 System.out.print("Invalid Input! Please try again later");
                                                 betterUI.pauseFor2Second();
                                                 betterUI.systemCls();
                                             }
-                                            
-                                            
 
                                         } else {
                                             scanner.nextLine();
@@ -856,16 +852,23 @@ public class programmeUI {
                                             betterUI.pauseFor2Second();
                                             betterUI.systemCls();
                                         }
-                                        
-                                        
-                                    }while(choice < 1 || choice > tempTGList.getNumberOfEntries());
+
+                                    } while (choice < 1 || choice > tempTGList.getNumberOfEntries());
+                                }
+                                else{
+                                    chkInput2 = false;
+                                    System.out.println("All tutorial groups existed in current programme");
+                                }
+                                
+                                
+
                                 
 
                             }while(chkInput2);
                             
                             
                     } else {
-                        scanner.nextLine();
+                        
                         System.out.println("Invalid option! Please enter a valid index\n");
                     }
 
@@ -904,39 +907,54 @@ public class programmeUI {
                         Programme tempProg = progManage.searchProgramme("", "").getData(index);
                         ListInterface<TutorialGroup> tempTGList = progManage.getAllTutorialGroupList();
 
-                        do {
+                        
+                        
+                        if(tempProg.getTutorialGroups().getNumberOfEntries() != 0){
+                            do {
 
-                            System.out.println("\n");
-                            System.out.println("==========================================================");
-                            System.out.println("Programe selected: " + tempProg.getProgrammeName());
-                            System.out.println("==========================================================");
-                            System.out.println("The available tutorial group for current programme to add: ");
+                                System.out.println("\n");
+                                System.out.println("==========================================================");
+                                System.out.println("Programe selected: " + tempProg.getProgrammeName());
+                                System.out.println("==========================================================");
+                                System.out.println("The available tutorial group for current programme to remove: ");
 
-                            for (int i = 1; i <= tempTGList.getNumberOfEntries(); i++) {
-                                if (tempTGList.getEntry(i).equals(tempProg.getTutorialGroups())) {
-                                    System.out.println("[" + i + "]");
-                                    System.out.println(tempTGList.getEntry(i));
+                                for (int i = 1; i <= tempTGList.getNumberOfEntries(); i++) {
+                                    if (tempProg.getTutorialGroups().contains(tempTGList.getEntry(i))) {
+                                        System.out.println("[" + i + "]");
+                                        System.out.println(tempTGList.getEntry(i));
+                                    }
+
                                 }
 
-                            }
+                                System.out.println("----------------------");
+                                System.out.print("Tutorial group index: ");
 
-                            System.out.println("----------------------");
-                            System.out.print("Tutorial group index: ");
+                                if (scanner.hasNextInt()) {
+                                    chkInput2 = false;
+                                    choice = scanner.nextInt();
 
-                            if (scanner.hasNextInt()) {
-                                chkInput2 = false;
-                                choice = scanner.nextInt();
+                                    // Consume the newline character left in the buffer
+                                    // after scan int, it will ignore the first coming scan line
+                                    scanner.nextLine();
 
-                                // Consume the newline character left in the buffer
-                                // after scan int, it will ignore the first coming scan line
-                                scanner.nextLine();
+                                    if (choice >= 1 && choice <= tempTGList.getNumberOfEntries()) {
+                                        TutorialGroup tempTG = tempTGList.getEntry(choice);
 
-                                if (choice >= 1 && choice <= tempTGList.getNumberOfEntries()) {
-                                    TutorialGroup tempTG = tempTGList.getEntry(choice);
-                                    tempProg.getTutorialGroups().remove(choice);
+                                        if (progManage.removeTutGrpFromProg(tempProg, choice)) {
+                                            //tempProg.getTutorialGroups().remove(choice);
 
-                                    progManage.addHistory("Remove tutorial group (id = " + tempTGList.getEntry(choice).getTutorialGroupID() + ") from programme (" + tempProg.getProgrammeName() + ")");
-                                    betterUI.loadingScreen("Removing");
+                                            progManage.addHistory("Remove tutorial group (id = " + tempTGList.getEntry(choice).getTutorialGroupID() + ") from programme (" + tempProg.getProgrammeName() + ")");
+                                            betterUI.loadingScreen("Removing");
+                                        } else {
+                                            System.out.println("No tutorial group was removed");
+                                        }
+
+                                    } else {
+
+                                        System.out.print("Invalid Input! Please try again later");
+                                        betterUI.pauseFor2Second();
+                                        betterUI.systemCls();
+                                    }
 
                                 } else {
                                     scanner.nextLine();
@@ -945,14 +963,15 @@ public class programmeUI {
                                     betterUI.systemCls();
                                 }
 
-                            } else {
-                                scanner.nextLine();
-                                System.out.print("Invalid Input! Please try again later");
-                                betterUI.pauseFor2Second();
-                                betterUI.systemCls();
-                            }
-
-                        } while (choice < 1 || choice > tempTGList.getNumberOfEntries());
+                            } while (choice < 1 || choice > tempTGList.getNumberOfEntries());
+                        }
+                        else{
+                            chkInput2 = false;
+                            System.out.println("Current programme has no tutorial group to remove");
+                        }
+                        
+                        
+                        
 
                     } while (chkInput2);
 
@@ -1002,7 +1021,7 @@ public class programmeUI {
                             System.out.println("The tutorial group for current programme: ");
 
                             
-                            if(tempProg.getTutorialGroups() == null){
+                            if(tempProg.getTutorialGroups().getNumberOfEntries() == 0){
                                 System.out.println("\tThis programme currently has no tutorial groups");
                                 
                             }else{
