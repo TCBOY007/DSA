@@ -110,12 +110,12 @@ public class DSA_Assignment {
     }
     
     public void deleteTutor(){
-        int rowDeleted = tutorUI.deleteTutorByROw();
+        int rowDeleted = tutorUI.deleteTutorByRow();
         
         if(rowDeleted == 0){
             System.out.println("Delete Canceled");
         }else{
-            System.out.println(instructor.deleteTutor(rowDeleted));
+            System.out.println(instructor.deleteTutor(rowDeleted - 1));
         }
         
     
