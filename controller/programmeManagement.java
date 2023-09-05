@@ -18,7 +18,7 @@ import java.time.format.DateTimeFormatter;
 public class programmeManagement {
 
     private LinkedListInterface<Programme> programmeList = new LinkedList<>();
-    private StackInterface<String> stack = new LinkedStack<>();
+    private LinkedStackInterface<String> stack = new LinkedStack<>();
     
     private ListInterface<TutorialGroup> tutorialGroupList = new ArrayList<>(); 
     
@@ -137,9 +137,43 @@ public class programmeManagement {
         return sucessfulRemove;
     }
     
+    public LinkedListInterface<Programme> getProgrammeList(){
+        return programmeList;
+    }
+    
     public ListInterface<TutorialGroup> getAllTutorialGroupList(){
         return tutorialGroupManage.getTGList();
     }
+    
+    
+    public boolean addTutGrpToProg(Programme progToAdd, TutorialGroup tutGrp){
+        
+        
+        if(!progToAdd.getTutorialGroups().contains(tutGrp)){
+            if(progToAdd.getTutorialGroups().adddata(tutGrp) ){
+                return true;
+            }
+        }
+        
+        return false;
+        
+    }
+    
+    public boolean removeTutGrpFromProg(Programme progToDelFrom, int position){
+        TutorialGroup deletedGrp = progToDelFrom.getTutorialGroups().remove(position);
+        
+        if(deletedGrp == null)
+            return false;
+        
+        
+        if(!progToDelFrom.getTutorialGroups().contains(deletedGrp)){
+            return true;
+        }
+        else
+            return false;
+        
+    }
+    
 
     public void addHistory(String history){
         
