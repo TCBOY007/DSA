@@ -182,14 +182,14 @@ public class MainProgramTG {
 
     public String getPositionTutorialGroup(int i) {
         String outputStr = "";
-        outputStr += String.valueOf(i) + TGList.getEntry(i) + "\n";
+        outputStr += String.valueOf(i+1) + TGList.getEntry(i) + "\n";
         return outputStr;
     }
 
     public String getAllTutorialGroup() {
         String outputStr = "";
         for (int i = 1; i <= TGList.getNumberOfEntries(); i++) {
-            outputStr += String.valueOf(i) + TGList.getEntry(i) + "\n";
+            outputStr += String.valueOf(i+1) + TGList.getEntry(i) + "\n";
         }
         return outputStr;
     }
@@ -239,7 +239,7 @@ public class MainProgramTG {
     public String getAllStudent(ListInterface<Student> NewStudent) {
         String outputStr = "";
         for (int i = 1; i <= NewStudent.getNumberOfEntries(); i++) {
-            outputStr += String.valueOf(i) + NewStudent.getEntry(i) + "\n";
+            outputStr += String.valueOf(i+1) + NewStudent.getEntry(i) + "\n";
         }
         return outputStr;
     }
