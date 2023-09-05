@@ -27,8 +27,6 @@ public interface ListInterface<T> {
     public boolean contains(T anEntry);
 
     public int getNumberOfEntries();
-    
-    public T searchByCriteria(Predicate<T> criteria);
 
     public boolean isEmpty();
     
