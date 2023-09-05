@@ -6,7 +6,7 @@ package betterUI;
 
 /**
  *
- * @author chook
+ * @author chook zhen yew
  */
 public class betterUI {
     
