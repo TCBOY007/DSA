@@ -7,9 +7,9 @@ import entity.Tutor;
 
 public class DSA_Assignment {
     
-    private Instructor instructor = new Instructor();
-    private  ListInterface<Tutor> tutorList = new ArrayList<>();
-    private TutorUI tutorUI = new TutorUI(instructor);
+    private static Instructor instructor = new Instructor();
+    private static ListInterface<Tutor> tutorList = new ArrayList<>();
+    private static TutorUI tutorUI = new TutorUI(instructor);
     
     
     public void runTutorProgram(){
